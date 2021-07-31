@@ -23,14 +23,11 @@ public class Player : MonoBehaviour
     public Transform playerHeadLower;
     float realReach;
     public float blockSize;
-    public Vector3 high;
-    public Vector3 low;
-    Vector3 zero;
+    public Transform playerMiddle;
 
     bool facingRight = true;
     float moveDirection = 0;
     bool isGrounded = false;
-    Vector3 cameraPos;
     Rigidbody2D r2d;
     CapsuleCollider2D mainCollider;
     Transform t;
@@ -91,10 +88,9 @@ public class Player : MonoBehaviour
         //Mining
         if (target != null)
         {
-            if (target.transform.position.y > playerHead.transform.position.y)
+            if (target.transform.position.y >= playerMiddle.transform.position.y)
             {
-                playerHead.transform.localPosition = high;
-                print("block to be mined by higherhead");
+                print("Higher");
                 Vector2 direction = (target.transform.position - playerHead.position).normalized;
 
                 RaycastHit2D hit = Physics2D.Raycast(playerHead.transform.position, direction, realReach, block);
@@ -102,6 +98,7 @@ public class Player : MonoBehaviour
                 Debug.DrawRay(playerHead.transform.position, direction * 100f, Color.red);
                 if (!hit)
                 {
+                    print("Out Of Range");
                     return;
                 }
 
@@ -110,13 +107,11 @@ public class Player : MonoBehaviour
                     focus = target;
                     target.GetComponent<BlockManagerStone>().Mine();
                 }
-                playerHead.transform.position = zero;
                 target = null;
             }
-            else if (target.transform.position.y <= playerHead.transform.position.y)
+            else if (target.transform.position.y <= playerMiddle.transform.position.y)
             {
-                playerHeadLower.transform.localPosition = low;
-                print("block to be mined by lowerHead");
+                print("lower");
                 Vector2 direction = (target.transform.position - playerHeadLower.position).normalized;
 
                 RaycastHit2D hit = Physics2D.Raycast(playerHeadLower.transform.position, direction, realReach, block);
@@ -124,6 +119,7 @@ public class Player : MonoBehaviour
                 Debug.DrawRay(playerHeadLower.transform.position, direction * realReach, Color.red);
                 if (!hit)
                 {
+                    print("Out Of Range");
                     return;
                 }
 
@@ -132,7 +128,6 @@ public class Player : MonoBehaviour
                     focus = target;
                     target.GetComponent<BlockManagerStone>().Mine();
                 }
-                playerHeadLower.transform.position = zero;
                 target = null;
             }
         }
