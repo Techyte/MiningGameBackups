@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7434d9840ef8ad04e964de4ae22f3734, type: 3}
+  m_Name: StoneFragments
+  m_EditorClassIdentifier: 
+  name: Stone Fragments
+  value: 2
+  texture: {fileID: 21300000, guid: 659dcdc70e84f6a43b0dfc48e340dd6a, type: 3}
+  rarity: 1
