@@ -7,24 +7,18 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    #region Variables
     // Move player in 2D space
-    public float maxSpeed = 3.4f;
-    public float jumpHeight = 6.5f;
-    public float gravityScale = 1.5f;
     public Animator anim;
     public static bool isMining = true;
-    public static GameObject focus;
-    public static GameObject mouseOver;
     public static Vector3 playerPos;
-    public static GameObject target;
     public LayerMask block;
-    public Transform playerHead;
-    public float gameReach;
-    public Transform playerHeadLower;
     float realReach;
-    public float blockSize;
-    public Transform playerMiddle;
     public Vector3 spawnFallback;
+    [SerializeField] float blockSize, gameReach;
+    [SerializeField] public Transform playerHeadLower, playerHead, playerMiddle;
+    [SerializeField] public static GameObject focus, mouseOver, target;
+    [SerializeField] float maxSpeed = 3.4f, jumpHeight = 6.5f, gravityScale = 1.5f;
 
     bool facingRight = true;
     float moveDirection = 0;
@@ -33,6 +27,9 @@ public class Player : MonoBehaviour
     CapsuleCollider2D mainCollider;
     Transform t;
 
+    #endregion
+
+    #region Start
     // Use this for initialization
     void Start()
     {
@@ -47,12 +44,13 @@ public class Player : MonoBehaviour
         r2d.gravityScale = gravityScale;
         facingRight = t.localScale.x > 0;
     }
+    #endregion
 
-
+    #region Update
     // Update is called once per frame
     void Update()
     {
-
+        #region Controlls
         // Movement controls
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
@@ -65,7 +63,9 @@ public class Player : MonoBehaviour
                 moveDirection = 0;
             }
         }
+        #endregion
 
+        #region Updating player direction
         // Change facing direction
         if (moveDirection != 0)
         {
@@ -80,13 +80,17 @@ public class Player : MonoBehaviour
                 t.localScale = new Vector3(-Mathf.Abs(t.localScale.x), t.localScale.y, t.localScale.z);
             }
         }
+        #endregion
 
+        #region Jumping
         // Jumping
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             r2d.velocity = new Vector2(r2d.velocity.x, jumpHeight);
         }
+        #endregion
 
+        #region Mining logic
         //Mining
         if (target != null)
         {
@@ -100,13 +104,14 @@ public class Player : MonoBehaviour
                 if (!hit)
                 {
                     print("Out Of Range");
+                    target = null;
                     return;
                 }
 
                 if (hit.transform.gameObject.tag == "Minable")
                 {
                     focus = target;
-                    target.GetComponent<BlockManagerStone>().Mine();
+                    target.GetComponent<BlockManager>().Mine();
                 }
                 target = null;
             }
@@ -120,19 +125,23 @@ public class Player : MonoBehaviour
                 if (!hit)
                 {
                     print("Out Of Range");
+                    target = null;
                     return;
                 }
 
                 if (hit.transform.gameObject.tag == "Minable")
                 {
                     focus = target;
-                    target.GetComponent<BlockManagerStone>().Mine();
+                    target.GetComponent<BlockManager>().Mine();
                 }
                 target = null;
             }
         }
+        #endregion
     }
+    #endregion
 
+    #region Mining function
     IEnumerator Mine()
     {
         anim.SetBool("PickSwing", true);
@@ -140,7 +149,9 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(1);
         isMining = false;
     }
+    #endregion
 
+    #region Fixed Update
     void FixedUpdate()
     {
         Bounds colliderBounds = mainCollider.bounds;
@@ -169,7 +180,9 @@ public class Player : MonoBehaviour
         Debug.DrawLine(groundCheckPos, groundCheckPos - new Vector3(0, colliderRadius, 0), isGrounded ? Color.green : Color.red);
         Debug.DrawLine(groundCheckPos, groundCheckPos - new Vector3(colliderRadius, 0, 0), isGrounded ? Color.green : Color.red);
     }
+    #endregion
 
+    #region Spawn test function
     void SpawnTest()
     { 
         RaycastHit2D hit = Physics2D.Raycast(playerMiddle.transform.position, Vector2.down, 1f, block);
@@ -181,4 +194,5 @@ public class Player : MonoBehaviour
             SpawnTest();
         }
     }
+    #endregion
 }

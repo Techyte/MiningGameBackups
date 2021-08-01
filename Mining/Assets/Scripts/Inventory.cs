@@ -19,13 +19,16 @@ public class Inventory : MonoBehaviour
 
     #endregion
 
+    #region Variables
     public delegate void OnItemChenged();
     public OnItemChenged onItemChangedCallback;
 
     public int space = 20;
 
     public List<Item> items = new List<Item>();
+    #endregion
 
+    #region Adding items
     public bool Add(Item item)
     {
         if (items.Count >= space)
@@ -38,7 +41,9 @@ public class Inventory : MonoBehaviour
 
         return true;
     }
+    #endregion
 
+    #region Removing items
     public void Remove(Item item) 
     {
         items.Remove(item);
@@ -49,4 +54,5 @@ public class Inventory : MonoBehaviour
         }
         print(items);
     }
+    #endregion
 }

@@ -5,8 +5,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class BlockManagerStone : MonoBehaviour
+public class BlockManager : MonoBehaviour
 {
+    #region Variables
     public SpriteRenderer overlay;
     public SpriteRenderer sr;
     public Block block;
@@ -15,7 +16,15 @@ public class BlockManagerStone : MonoBehaviour
     GameObject[] Posdrops;
     bool mouseIsOnBlock;
     public LayerMask player;
-    
+    #endregion
+
+    #region Main functions
+
+    public void Mine()
+    {
+        durability--;
+    }
+
     void Start()
     {
         breakTextures = block.breakTextures;
@@ -40,10 +49,12 @@ public class BlockManagerStone : MonoBehaviour
         mouseIsOnBlock = false;
         overlay.sprite = null;
     }
+    #endregion
 
-
+    #region Update
     private void Update()
     {
+        #region Logic ifs
 
         if (Player.focus == this.gameObject)
         {
@@ -59,7 +70,9 @@ public class BlockManagerStone : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        #endregion
 
+        #region Durability ifs
         switch (durability)
         {
             case 1:
@@ -75,17 +88,17 @@ public class BlockManagerStone : MonoBehaviour
                 sr.sprite = breakTextures[3];
                 break;
         }
+        #endregion
 
     }
+    #endregion
 
+    #region IEnumerators
     IEnumerator wait()
     {
         yield return new WaitForSeconds((float)0.01);
         gameObject.tag = "Block";
     }
+    #endregion
 
-    public void Mine()
-    {
-        durability--;
-    }
 }
