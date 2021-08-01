@@ -15,7 +15,6 @@ public class BlockManagerStone : MonoBehaviour
     GameObject[] Posdrops;
     bool mouseIsOnBlock;
     public LayerMask player;
-    public Transform plya;
     
     void Start()
     {
@@ -45,7 +44,6 @@ public class BlockManagerStone : MonoBehaviour
 
     private void Update()
     {
-        plya = Player.playerPos.transform;
 
         if (Player.focus == this.gameObject)
         {

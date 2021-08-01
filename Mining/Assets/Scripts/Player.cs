@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     public static bool isMining = true;
     public static GameObject focus;
     public static GameObject mouseOver;
-    public static Transform playerPos;
+    public static Vector3 playerPos;
     public static GameObject target;
     public LayerMask block;
     public Transform playerHead;
@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     float realReach;
     public float blockSize;
     public Transform playerMiddle;
+    public Vector3 spawnFallback;
 
     bool facingRight = true;
     float moveDirection = 0;
@@ -35,6 +36,8 @@ public class Player : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        SpawnTest();
+        playerPos = gameObject.transform.position;
         realReach = gameReach *= blockSize;
         t = transform;
         r2d = GetComponent<Rigidbody2D>();
@@ -49,7 +52,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        playerPos = gameObject.transform;
 
         // Movement controls
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
@@ -90,7 +92,6 @@ public class Player : MonoBehaviour
         {
             if (target.transform.position.y >= playerMiddle.transform.position.y)
             {
-                print("Higher");
                 Vector2 direction = (target.transform.position - playerHead.position).normalized;
 
                 RaycastHit2D hit = Physics2D.Raycast(playerHead.transform.position, direction, realReach, block);
@@ -111,7 +112,6 @@ public class Player : MonoBehaviour
             }
             else if (target.transform.position.y <= playerMiddle.transform.position.y)
             {
-                print("lower");
                 Vector2 direction = (target.transform.position - playerHeadLower.position).normalized;
 
                 RaycastHit2D hit = Physics2D.Raycast(playerHeadLower.transform.position, direction, realReach, block);
@@ -168,5 +168,17 @@ public class Player : MonoBehaviour
         // Simple debug
         Debug.DrawLine(groundCheckPos, groundCheckPos - new Vector3(0, colliderRadius, 0), isGrounded ? Color.green : Color.red);
         Debug.DrawLine(groundCheckPos, groundCheckPos - new Vector3(colliderRadius, 0, 0), isGrounded ? Color.green : Color.red);
+    }
+
+    void SpawnTest()
+    { 
+        RaycastHit2D hit = Physics2D.Raycast(playerMiddle.transform.position, Vector2.down, 1f, block);
+
+        Debug.DrawRay(playerMiddle.transform.position, Vector2.down, Color.red, 10f);
+        if (hit)
+        {
+            gameObject.transform.position = gameObject.transform.position += spawnFallback;
+            SpawnTest();
+        }
     }
 }

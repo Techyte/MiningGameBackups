@@ -401,7 +401,7 @@ Transform:
   m_GameObject: {fileID: 368160062}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_Children: []
   m_Father: {fileID: 875786712}
   m_RootOrder: 4
@@ -723,6 +723,7 @@ MonoBehaviour:
   playerHeadLower: {fileID: 214822485}
   blockSize: 0.786
   playerMiddle: {fileID: 368160063}
+  spawnFallback: {x: 0, y: 1, z: 0}
 --- !u!70 &875786714
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
