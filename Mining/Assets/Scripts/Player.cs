@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
     Rigidbody2D r2d;
     CapsuleCollider2D mainCollider;
     Transform t;
+    public Transform movementChecker;
 
     #endregion
 
@@ -51,6 +52,8 @@ public class Player : MonoBehaviour
     void Update()
     {
         #region Controlls
+
+
         // Movement controls
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
@@ -84,7 +87,7 @@ public class Player : MonoBehaviour
 
         #region Jumping
         // Jumping
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (Input.GetKey(KeyCode.Space) && isGrounded)
         {
             r2d.velocity = new Vector2(r2d.velocity.x, jumpHeight);
         }
