@@ -1067,8 +1067,8 @@ MonoBehaviour:
   dirt: {fileID: 6252554606140566786, guid: ace2311a3ddde1f448e8bcbc85a023c8, type: 3}
   grass: {fileID: 8652483545150992935, guid: d9d43e016f18dbf46927f5363b8f09c0, type: 3}
   stone: {fileID: 78139289374354417, guid: b20b0376af7199f4ebb12862cc3de8ac, type: 3}
-  heightValue: 66
-  smoothness: 33
+  heightValue: 50
+  smoothness: 50
   seed: 0
 --- !u!1 &2061712469
 GameObject:
@@ -1113,7 +1113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe5f87ba4c20b664e9693e5a38b8f666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  space: 1
+  space: 20
   items: []
 --- !u!1 &2133148293
 GameObject:

@@ -66,23 +66,23 @@ public class ProceduralGeneration : MonoBehaviour
     #region Spawn function
     void spawnObj(GameObject obj, int width, int height)//What ever we spawn will be a child of our procedural generation gameObj
     {
-            obj = Instantiate(obj, new Vector2(width, height), Quaternion.identity);
-            GameObject objectToBeSpawned = obj;
+        GameObject objHolder = obj;
+        obj = Instantiate(obj, new Vector2(width, height), Quaternion.identity);
 
-            if (objectToBeSpawned = grass)
-            {
-                gameObject.transform.parent = grassHolder.transform;
-            }
+        if (objHolder == grass)
+        {
+            obj.transform.parent = grassHolder.transform;
+        }
 
-            if (objectToBeSpawned = dirt)
-            {
-                gameObject.transform.parent = dirtHolder.transform;
-            }
+        if (objHolder == dirt)
+        {
+            obj.transform.parent = dirtHolder.transform;
+        }
 
-            if (objectToBeSpawned = stone)
-            {
-                gameObject.transform.parent = stoneHolder.transform;
-            }
+        if (objHolder == stone)
+        {
+            obj.transform.parent = stoneHolder.transform;
+        }
     }
     #endregion
 

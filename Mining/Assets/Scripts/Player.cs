@@ -184,11 +184,11 @@ public class Player : MonoBehaviour
 
     #region Spawn test function
     void SpawnTest()
-    { 
-        RaycastHit2D hit = Physics2D.Raycast(playerMiddle.transform.position, Vector2.down, 1f, block);
+    {
+        RaycastHit2D ray = Physics2D.Raycast(playerMiddle.transform.position, Vector2.down, 5f);
 
-        Debug.DrawRay(playerMiddle.transform.position, Vector2.down, Color.red, 10f);
-        if (hit)
+        Debug.DrawRay(playerMiddle.transform.position, Vector2.down, Color.red, 5f);
+        if (ray)
         {
             gameObject.transform.position = gameObject.transform.position += spawnFallback;
             SpawnTest();

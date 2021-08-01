@@ -104,7 +104,6 @@ MonoBehaviour:
   player:
     serializedVersion: 2
     m_Bits: 16384
-  plya: {fileID: 0}
 --- !u!61 &78139289374354382
 BoxCollider2D:
   m_ObjectHideFlags: 0

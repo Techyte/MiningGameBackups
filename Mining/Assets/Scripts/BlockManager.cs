@@ -27,6 +27,7 @@ public class BlockManager : MonoBehaviour
 
     void Start()
     {
+        Posdrops = block.drops;
         breakTextures = block.breakTextures;
         sr.sprite = block.texture;
         durability = block.durability;
@@ -49,6 +50,17 @@ public class BlockManager : MonoBehaviour
         mouseIsOnBlock = false;
         overlay.sprite = null;
     }
+
+    void Drop()
+    {
+        if (Posdrops.Length == 0)
+        {
+            print("nothing to drop");
+            return;
+        }
+        Instantiate(Posdrops[0], gameObject.transform.position, Quaternion.identity);
+    }
+
     #endregion
 
     #region Update
@@ -68,11 +80,12 @@ public class BlockManager : MonoBehaviour
 
         if (durability <= 0)
         {
+            Drop();
             Destroy(gameObject);
         }
         #endregion
 
-        #region Durability ifs
+        #region Durability switch
         switch (durability)
         {
             case 1:

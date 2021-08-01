@@ -135,7 +135,6 @@ MonoBehaviour:
   player:
     serializedVersion: 2
     m_Bits: 16384
-  plya: {fileID: 0}
 --- !u!212 &8358773548564931245
 SpriteRenderer:
   m_ObjectHideFlags: 0
