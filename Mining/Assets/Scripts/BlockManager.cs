@@ -55,7 +55,6 @@ public class BlockManager : MonoBehaviour
     {
         if (Posdrops.Length == 0)
         {
-            print("nothing to drop");
             return;
         }
         Instantiate(Posdrops[0], gameObject.transform.position, Quaternion.identity);

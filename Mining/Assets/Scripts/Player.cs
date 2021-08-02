@@ -53,7 +53,6 @@ public class Player : MonoBehaviour
     {
         #region Controlls
 
-
         // Movement controls
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
