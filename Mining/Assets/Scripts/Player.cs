@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     public static bool isMining = true;
     public static Vector3 playerPos;
     public LayerMask block;
-    float realReach;
+    public static float realReach;
     public Vector3 spawnFallback;
     [SerializeField] float blockSize, gameReach;
     [SerializeField] public Transform playerHeadLower, playerHead, playerMiddle;
