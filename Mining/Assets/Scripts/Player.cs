@@ -8,6 +8,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     #region Variables
+    //Variables
     // Move player in 2D space
     public Animator anim;
     public static bool isMining = true;
@@ -48,7 +49,6 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Update
-    // Update is called once per frame
     void Update()
     {
         #region Controlls
@@ -93,16 +93,19 @@ public class Player : MonoBehaviour
         #endregion
 
         #region Mining logic
-        //Mining
+        //if the player is locked on to a block then run the code
         if (target != null)
         {
+            //If the block is above the player
             if (target.transform.position.y >= playerMiddle.transform.position.y)
             {
+                //Send a RayCast out to see if we can mine the block
                 Vector2 direction = (target.transform.position - playerHead.position).normalized;
 
                 RaycastHit2D hit = Physics2D.Raycast(playerHead.transform.position, direction, realReach, block);
 
                 Debug.DrawRay(playerHead.transform.position, direction * 100f, Color.red);
+                //If the block is out of range
                 if (!hit)
                 {
                     print("Out Of Range");
@@ -110,6 +113,7 @@ public class Player : MonoBehaviour
                     return;
                 }
 
+                //If we can mine the block
                 if (hit.transform.gameObject.tag == "Minable")
                 {
                     focus = target;
@@ -117,13 +121,16 @@ public class Player : MonoBehaviour
                 }
                 target = null;
             }
+            //If the block is below the player
             else if (target.transform.position.y <= playerMiddle.transform.position.y)
             {
+                //Send a RayCast out to see if we can mine the block
                 Vector2 direction = (target.transform.position - playerHeadLower.position).normalized;
 
                 RaycastHit2D hit = Physics2D.Raycast(playerHeadLower.transform.position, direction, realReach, block);
 
                 Debug.DrawRay(playerHeadLower.transform.position, direction * realReach, Color.red);
+                //If the block is out of reach
                 if (!hit)
                 {
                     print("Out Of Range");
@@ -131,6 +138,7 @@ public class Player : MonoBehaviour
                     return;
                 }
 
+                //If we can mine the block
                 if (hit.transform.gameObject.tag == "Minable")
                 {
                     focus = target;
@@ -144,6 +152,7 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Mining function
+    //Function for mining a block
     IEnumerator Mine()
     {
         anim.SetBool("PickSwing", true);
@@ -187,9 +196,11 @@ public class Player : MonoBehaviour
     #region Spawn test function
     void SpawnTest()
     {
+        //Sending a raycast to see if the player spawned in a block
         RaycastHit2D ray = Physics2D.Raycast(playerMiddle.transform.position, Vector2.down, 5f);
 
         Debug.DrawRay(playerMiddle.transform.position, Vector2.down, Color.red, 5f);
+        //If they spawned in a block then teliport them up by 1 untill they are not in a block
         if (ray)
         {
             gameObject.transform.position = gameObject.transform.position += spawnFallback;

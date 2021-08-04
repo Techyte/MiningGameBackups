@@ -5,6 +5,7 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     #region Singleton
+    //The inventory Singleton 
     public static Inventory instance;
 
     void Awake()
@@ -20,6 +21,7 @@ public class Inventory : MonoBehaviour
     #endregion
 
     #region Variables
+    //Variables
     public delegate void OnItemChenged();
     public OnItemChenged onItemChangedCallback;
 
@@ -29,6 +31,7 @@ public class Inventory : MonoBehaviour
     #endregion
 
     #region Adding items
+    //Function to add items to the inventory (can be used anywhere)
     public bool Add(Item item)
     {
         if (items.Count >= space)
@@ -44,6 +47,7 @@ public class Inventory : MonoBehaviour
     #endregion
 
     #region Removing items
+    //Function to remove items from the inventory (can be called from anywhere)
     public void Remove(Item item) 
     {
         items.Remove(item);

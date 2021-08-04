@@ -1127,7 +1127,7 @@ MonoBehaviour:
   grassHolder: {fileID: 86057904}
   stoneHolder: {fileID: 2133148293}
   dirt: {fileID: 6252554606140566786, guid: ace2311a3ddde1f448e8bcbc85a023c8, type: 3}
-  grass: {fileID: 8652483545150992935, guid: d9d43e016f18dbf46927f5363b8f09c0, type: 3}
+  grass: {fileID: 5331034320891986594, guid: 3609845e3afbed140a5562ac9e129dc1, type: 3}
   stone: {fileID: 78139289374354417, guid: b20b0376af7199f4ebb12862cc3de8ac, type: 3}
   heightValue: 50
   smoothness: 50
@@ -1205,6 +1205,9 @@ MonoBehaviour:
   buildOfsetright: {x: -1, y: 0, z: 0}
   buildOfsetup: {x: 0, y: -1, z: 0}
   buildOfsetdown: {x: 0, y: 1, z: 0}
+  buildPoint:
+    serializedVersion: 2
+    m_Bits: 65536
 --- !u!1 &2133148293
 GameObject:
   m_ObjectHideFlags: 0
