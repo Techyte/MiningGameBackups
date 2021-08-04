@@ -10,7 +10,7 @@ public class BuildingManager : MonoBehaviour
     public LayerMask block;
     public Camera MainCamera;
     public GameObject mousePos;
-    public GameObject obj;
+    public static GameObject obj;
     public GameObject[] blocks;
     public GameObject stoneHolder;
     public Vector3 buildOfsetleft;
@@ -18,13 +18,36 @@ public class BuildingManager : MonoBehaviour
     public Vector3 buildOfsetup;
     public Vector3 buildOfsetdown;
     public LayerMask buildPoint;
+    [SerializeField] GameObject objPlaceholder;
     #endregion
+
+    private void Start()
+    {
+        obj = objPlaceholder;
+    }
 
     #region Update
     void Update()
     {
         //Set the object we want to be building with
-        obj = blocks[0];
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            obj = blocks[0];
+            print(obj);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            obj = blocks[1];
+            print(obj);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            obj = blocks[2];
+            print(obj);
+        }
+
         if (Input.GetMouseButtonDown(1))
         {
             #region Building
