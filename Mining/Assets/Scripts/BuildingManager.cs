@@ -6,24 +6,20 @@ public class BuildingManager : MonoBehaviour
 {
     #region Variables
     //Variables
-    public Transform player;
-    public LayerMask block;
-    public Camera MainCamera;
-    public GameObject mousePos;
-    public static GameObject obj;
-    public GameObject[] blocks;
-    public GameObject stoneHolder;
-    public Vector3 buildOfsetleft;
-    public Vector3 buildOfsetright;
-    public Vector3 buildOfsetup;
-    public Vector3 buildOfsetdown;
-    public LayerMask buildPoint;
-    [SerializeField] GameObject objPlaceholder;
+    [SerializeField] Transform player;
+    [SerializeField] LayerMask block;
+    [SerializeField] Camera MainCamera;
+    [SerializeField] GameObject obj;
+    [SerializeField] GameObject[] hotbarBlocks;
+    [SerializeField] LayerMask buildPoint;
+    [SerializeField] Vector3 buildOfsetdown, buildOfsetup, buildOfsetright, buildOfsetleft;
+    [SerializeField] GameObject BuildHolder, mousePos;
+    public static GameObject currentBuildingBlock;
     #endregion
 
     private void Start()
     {
-        obj = objPlaceholder;
+        currentBuildingBlock = hotbarBlocks[0];
     }
 
     #region Update
@@ -32,21 +28,20 @@ public class BuildingManager : MonoBehaviour
         //Set the object we want to be building with
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            obj = blocks[0];
-            print(obj);
+            currentBuildingBlock = hotbarBlocks[0];
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            obj = blocks[1];
-            print(obj);
+            currentBuildingBlock = hotbarBlocks[1];
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            obj = blocks[2];
-            print(obj);
+            currentBuildingBlock = hotbarBlocks[2];
         }
+
+        obj = currentBuildingBlock;
 
         if (Input.GetMouseButtonDown(1))
         {
@@ -74,7 +69,7 @@ public class BuildingManager : MonoBehaviour
                     if (hitsecond.collider.name == "left")
                     {
                         obj = Instantiate(obj, blockHit.transform.position - buildOfsetright, Quaternion.identity);
-                        obj.transform.parent = stoneHolder.transform;
+                        obj.transform.parent = BuildHolder.transform;
                         return;
                     }
 
@@ -82,7 +77,7 @@ public class BuildingManager : MonoBehaviour
                     if (hitsecond.collider.name == "right")
                     {
                         obj = Instantiate(obj, blockHit.transform.position - buildOfsetleft, Quaternion.identity);
-                        obj.transform.parent = stoneHolder.transform;
+                        obj.transform.parent = BuildHolder.transform;
                         return;
                     }
 
@@ -90,7 +85,7 @@ public class BuildingManager : MonoBehaviour
                     if (hitsecond.collider.name == "up")
                     {
                         obj = Instantiate(obj, blockHit.transform.position - buildOfsetdown, Quaternion.identity);
-                        obj.transform.parent = stoneHolder.transform;
+                        obj.transform.parent = BuildHolder.transform;
                         return;
                     }
 
@@ -98,7 +93,7 @@ public class BuildingManager : MonoBehaviour
                     if (hitsecond.collider.name == "down")
                     {
                         obj = Instantiate(obj, blockHit.transform.position - buildOfsetup, Quaternion.identity);
-                        obj.transform.parent = stoneHolder.transform;
+                        obj.transform.parent = BuildHolder.transform;
                         return;
                     }
                     #endregion

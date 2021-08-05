@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 
 public class BlockManager : MonoBehaviour
 {
-    #region Variables
     //Variables
     public SpriteRenderer overlay;
     public SpriteRenderer sr;
@@ -17,7 +16,6 @@ public class BlockManager : MonoBehaviour
     GameObject[] Posdrops;
     bool mouseIsOnBlock;
     public LayerMask player;
-    #endregion
 
     #region Main functions
 
