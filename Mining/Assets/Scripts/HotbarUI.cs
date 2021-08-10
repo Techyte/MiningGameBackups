@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BlockUI : MonoBehaviour
+public class HotbarUI : MonoBehaviour
 {
     [SerializeField] Image[] slots, slotHolders;
     [SerializeField] GameObject[] blocks;

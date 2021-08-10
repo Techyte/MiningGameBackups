@@ -15,7 +15,6 @@ public class BlockManager : MonoBehaviour
     Sprite[] breakTextures;
     GameObject[] Posdrops;
     bool mouseIsOnBlock;
-    public LayerMask player;
 
     #region Main functions
 

@@ -52,7 +52,6 @@ public class Player : MonoBehaviour
     void Update()
     {
         #region Controlls
-
         // Movement controls
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
@@ -116,6 +115,7 @@ public class Player : MonoBehaviour
                 //If we can mine the block
                 if (hit.transform.gameObject.tag == "Minable")
                 {
+                    anim.SetBool("PickSwing", true);
                     focus = target;
                     target.GetComponent<BlockManager>().Mine();
                 }
@@ -141,6 +141,7 @@ public class Player : MonoBehaviour
                 //If we can mine the block
                 if (hit.transform.gameObject.tag == "Minable")
                 {
+                    anim.SetBool("PickSwing", true);
                     focus = target;
                     target.GetComponent<BlockManager>().Mine();
                 }
@@ -148,17 +149,6 @@ public class Player : MonoBehaviour
             }
         }
         #endregion
-    }
-    #endregion
-
-    #region Mining function
-    //Function for mining a block
-    IEnumerator Mine()
-    {
-        anim.SetBool("PickSwing", true);
-        isMining = true;
-        yield return new WaitForSeconds(1);
-        isMining = false;
     }
     #endregion
 

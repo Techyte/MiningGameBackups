@@ -222,9 +222,6 @@ MonoBehaviour:
   sr: {fileID: 753804722232452507}
   block: {fileID: 11400000, guid: 6fa9637c8c359fa419e1f35af2cd0365, type: 2}
   durability: 0
-  player:
-    serializedVersion: 2
-    m_Bits: 16384
 --- !u!212 &753804722232452507
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -244,7 +241,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -311,7 +308,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3810730092852032992}
-  m_Layer: 16
+  m_Layer: 14
   m_Name: BuildColliderHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -386,7 +383,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

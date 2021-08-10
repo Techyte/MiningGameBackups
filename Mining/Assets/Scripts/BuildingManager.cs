@@ -7,13 +7,13 @@ public class BuildingManager : MonoBehaviour
     #region Variables
     //Variables
     [SerializeField] Transform player;
-    [SerializeField] LayerMask block;
+    [SerializeField] LayerMask block, buildPoint;
     [SerializeField] Camera MainCamera;
     [SerializeField] GameObject obj;
     [SerializeField] GameObject[] hotbarBlocks;
-    [SerializeField] LayerMask buildPoint;
     [SerializeField] Vector3 buildOfsetdown, buildOfsetup, buildOfsetright, buildOfsetleft;
     [SerializeField] GameObject BuildHolder, mousePos;
+    [SerializeField] int buildLimit;
     public static GameObject currentBuildingBlock;
     #endregion
 
@@ -54,7 +54,7 @@ public class BuildingManager : MonoBehaviour
             //If we can place a block then run this code
             if (hit)
             {
-                #region Second Raycase
+                #region Second Raycast
                 //Set BlockHit equal to whatever block we hit so we can use its position later
                 GameObject blockHit = hit.transform.gameObject;
 
@@ -68,33 +68,53 @@ public class BuildingManager : MonoBehaviour
                     //If we hit the left side of the block then place it on the left side
                     if (hitsecond.collider.name == "left")
                     {
-                        obj = Instantiate(obj, blockHit.transform.position - buildOfsetright, Quaternion.identity);
-                        obj.transform.parent = BuildHolder.transform;
-                        return;
+                        Vector3 finalBlockPos = blockHit.transform.position - buildOfsetright;
+                        //Make sure that when we place the block it wont be above the build limit
+                        if (finalBlockPos.y <= buildLimit)
+                        {
+                            obj = Instantiate(obj, blockHit.transform.position - buildOfsetright, Quaternion.identity);
+                            obj.transform.parent = BuildHolder.transform;
+                            return;
+                        }
                     }
 
                     //If we hit the right side of the block then place it on the right side
                     if (hitsecond.collider.name == "right")
                     {
-                        obj = Instantiate(obj, blockHit.transform.position - buildOfsetleft, Quaternion.identity);
-                        obj.transform.parent = BuildHolder.transform;
-                        return;
+                        Vector3 finalBlockPos = blockHit.transform.position - buildOfsetleft;
+                        //Make sure that when we place the block it wont be above the build limit
+                        if (finalBlockPos.y <= buildLimit)
+                        {
+                            obj = Instantiate(obj, blockHit.transform.position - buildOfsetleft, Quaternion.identity);
+                            obj.transform.parent = BuildHolder.transform;
+                            return;
+                        }
                     }
 
                     //If we hit the upper side of the block then place it on the upper side
                     if (hitsecond.collider.name == "up")
                     {
-                        obj = Instantiate(obj, blockHit.transform.position - buildOfsetdown, Quaternion.identity);
-                        obj.transform.parent = BuildHolder.transform;
-                        return;
+                        Vector3 finalBlockPos = blockHit.transform.position - buildOfsetdown;
+                        //Make sure that when we place the block it wont be above the build limit
+                        if (finalBlockPos.y <= buildLimit)
+                        {
+                            obj = Instantiate(obj, blockHit.transform.position - buildOfsetdown, Quaternion.identity);
+                            obj.transform.parent = BuildHolder.transform;
+                            return;
+                        }
                     }
 
                     //If we hit the bottom of the block then place it on the bottom
                     if (hitsecond.collider.name == "down")
                     {
-                        obj = Instantiate(obj, blockHit.transform.position - buildOfsetup, Quaternion.identity);
-                        obj.transform.parent = BuildHolder.transform;
-                        return;
+                        Vector3 finalBlockPos = blockHit.transform.position - buildOfsetup;
+                        //Make sure that when we place the block it wont be above the build limit
+                        if (finalBlockPos.y <= buildLimit)
+                        {
+                            obj = Instantiate(obj, blockHit.transform.position - buildOfsetup, Quaternion.identity);
+                            obj.transform.parent = BuildHolder.transform;
+                            return;
+                        }
                     }
                     #endregion
                 }

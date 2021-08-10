@@ -133,13 +133,13 @@ GameObject:
   m_Component:
   - component: {fileID: 50926739}
   - component: {fileID: 50926740}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PlayerPick
   m_TagString: Pick
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &50926739
 Transform:
   m_ObjectHideFlags: 0
@@ -291,7 +291,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 136700448}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PlayerBodyIdle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -397,7 +397,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 214822485}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PlayerHeadLower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -429,7 +429,7 @@ GameObject:
   - component: {fileID: 277642182}
   - component: {fileID: 277642183}
   - component: {fileID: 277642184}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Square (2)
   m_TagString: Pick
   m_Icon: {fileID: 0}
@@ -469,7 +469,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -536,7 +536,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 368160063}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Middle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -598,7 +598,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -756,7 +756,7 @@ GameObject:
   - component: {fileID: 532899621}
   - component: {fileID: 532899622}
   - component: {fileID: 532899623}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Square (3)
   m_TagString: Pick
   m_Icon: {fileID: 0}
@@ -796,7 +796,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -960,6 +960,78 @@ Transform:
   m_Father: {fileID: 708534172}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &640816418
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 640816420}
+  - component: {fileID: 640816419}
+  m_Layer: 0
+  m_Name: Sun
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &640816419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640816418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_LightType: 4
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0.5
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1
+  m_LightVolumeOpacity: 0
+  m_ApplyToSortingLayers: 00000000
+  m_LightCookieSprite: {fileID: 0}
+  m_UseNormalMap: 0
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_ShadowIntensity: 0
+  m_ShadowVolumeIntensity: 0
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 1
+  m_PointLightDistance: 3
+  m_PointLightQuality: 1
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}
+--- !u!4 &640816420
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640816418}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 42, y: 29.57075, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &648890518
 GameObject:
   m_ObjectHideFlags: 0
@@ -1078,7 +1150,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 844587683}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PlayerHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1111,7 +1183,7 @@ GameObject:
   - component: {fileID: 875786715}
   - component: {fileID: 875786714}
   - component: {fileID: 875786713}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1240,7 +1312,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 971601095}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: MovementChecker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1389,7 +1461,7 @@ GameObject:
   - component: {fileID: 1064730533}
   - component: {fileID: 1064730534}
   - component: {fileID: 1064730535}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Square (1)
   m_TagString: Pick
   m_Icon: {fileID: 0}
@@ -1429,7 +1501,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1713,7 +1785,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1175593138}
   - component: {fileID: 1175593137}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PlayerBodyIdle1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1739,7 +1811,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2002,7 +2074,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1519936945}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PlayerGrpahics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2484,21 +2556,22 @@ MonoBehaviour:
   block:
     serializedVersion: 2
     m_Bits: 16384
+  buildPoint:
+    serializedVersion: 2
+    m_Bits: 65536
   MainCamera: {fileID: 519420031}
   obj: {fileID: 0}
   hotbarBlocks:
   - {fileID: 5331034320891986594, guid: 3609845e3afbed140a5562ac9e129dc1, type: 3}
   - {fileID: 6252554606140566786, guid: ace2311a3ddde1f448e8bcbc85a023c8, type: 3}
   - {fileID: 78139289374354417, guid: b20b0376af7199f4ebb12862cc3de8ac, type: 3}
-  buildPoint:
-    serializedVersion: 2
-    m_Bits: 65536
   buildOfsetdown: {x: 0, y: 1, z: 0}
   buildOfsetup: {x: 0, y: -1, z: 0}
   buildOfsetright: {x: -1, y: 0, z: 0}
   buildOfsetleft: {x: 1, y: 0, z: 0}
   BuildHolder: {fileID: 582304399}
   mousePos: {fileID: 429337159}
+  buildLimit: 60
 --- !u!1 &2099818566
 GameObject:
   m_ObjectHideFlags: 0
