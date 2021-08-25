@@ -1051,6 +1051,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3398644354702877156, guid: 3609845e3afbed140a5562ac9e129dc1, type: 3}
+      propertyPath: m_Size.x
+      value: 1.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 3398644354702877156, guid: 3609845e3afbed140a5562ac9e129dc1, type: 3}
+      propertyPath: m_Size.y
+      value: 1.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 3398644354702877156, guid: 3609845e3afbed140a5562ac9e129dc1, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c2f38f963908fdd4e898aad376e6f465, type: 3}
+    - target: {fileID: 3398644354702877156, guid: 3609845e3afbed140a5562ac9e129dc1, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5331034320891986594, guid: 3609845e3afbed140a5562ac9e129dc1, type: 3}
       propertyPath: m_Name
       value: GrassBlock

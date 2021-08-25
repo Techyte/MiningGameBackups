@@ -15,7 +15,7 @@ MonoBehaviour:
   selectedTexture: {fileID: 21300000, guid: 136825d0c41ede14c8e3d9cae177e0d8, type: 3}
   name: Grass
   durability: 5
-  texture: {fileID: 21300000, guid: f04da4864efb5474e9fc2adc8ab7c945, type: 3}
+  texture: {fileID: 21300000, guid: c2f38f963908fdd4e898aad376e6f465, type: 3}
   drops: []
   breakTextures:
   - {fileID: 21300000, guid: c2c309630eee7564e92ef207c52cc925, type: 3}
