@@ -19,8 +19,8 @@ MonoBehaviour:
   drops:
   - {fileID: 6832648174067225870, guid: 8cd2d00b8a4218545a508ba755ff2411, type: 3}
   breakTextures:
-  - {fileID: 21300000, guid: 3905751bbb1c1084aa2a1904f7d799a7, type: 3}
-  - {fileID: 21300000, guid: ab6d1bdc5ac9b3c40abaf8bdf306d9df, type: 3}
-  - {fileID: 21300000, guid: 9a6d6bcc8ca921145a626ee22fa45ebb, type: 3}
-  - {fileID: 21300000, guid: d39e5ef14456e394bb2c9c777969192f, type: 3}
+  - {fileID: 21300000, guid: 999fa8994aaa6f040bf88f093d73f1f7, type: 3}
+  - {fileID: 21300000, guid: 02e81219b5cf94a44b6d733f2daa8d1d, type: 3}
+  - {fileID: 21300000, guid: af7a0ff50db748244910ec336c2b9ef8, type: 3}
+  - {fileID: 21300000, guid: c646a32be22e5784b8ae6363c71bbf2c, type: 3}
   hoverTexture: {fileID: 21300000, guid: 637ca63f06bd3884abbc8b5bffb15266, type: 3}

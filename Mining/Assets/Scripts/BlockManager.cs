@@ -15,6 +15,7 @@ public class BlockManager : MonoBehaviour
     Sprite[] breakTextures;
     GameObject[] Posdrops;
     bool mouseIsOnBlock;
+    [SerializeField] SpriteRenderer breakingOverlay;
 
     #region Main functions
 
@@ -95,16 +96,16 @@ public class BlockManager : MonoBehaviour
         switch (durability)
         {
             case 1:
-                sr.sprite = breakTextures[0];
+                breakingOverlay.sprite = breakTextures[0];
                 break;
             case 2:
-                sr.sprite = breakTextures[1];
+                breakingOverlay.sprite = breakTextures[1];
                 break;
             case 3:
-                sr.sprite = breakTextures[2];
+                breakingOverlay.sprite = breakTextures[2];
                 break;
             case 4:
-                sr.sprite = breakTextures[3];
+                breakingOverlay.sprite = breakTextures[3];
                 break;
         }
         #endregion

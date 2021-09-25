@@ -25,21 +25,6 @@ public class BuildingManager : MonoBehaviour
     #region Update
     void Update()
     {
-        //Set the object we want to be building with
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            currentBuildingBlock = hotbarBlocks[0];
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            currentBuildingBlock = hotbarBlocks[1];
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            currentBuildingBlock = hotbarBlocks[2];
-        }
 
         obj = currentBuildingBlock;
 
