@@ -9,8 +9,8 @@ public class ProceduralGeneration : MonoBehaviour
     [SerializeField] int width;
     [SerializeField] int minStoneheight, maxStoneHeight;
     //[SerializeField] GameObject dirt, grass, stone;
-    [SerializeField] GameObject dirtHolder, grassHolder, stoneHolder;
-    [SerializeField] GameObject dirt, grass, stone;
+    [SerializeField] GameObject dirtHolder, grassHolder, stoneHolder, woodenLogsHolder;
+    [SerializeField] GameObject dirt, grass, stone, woodenLogs;
     [Range(0, 100)]
     [SerializeField] float heightValue, smoothness;
     [SerializeField] float seed;
@@ -57,6 +57,11 @@ public class ProceduralGeneration : MonoBehaviour
                 {
                     //spawnObj(grass, x, height);
                     spawnObj(grass, x, height);
+                    int randomInt = Random.Range(0, 50);
+                    if (randomInt == 1)
+                    {
+                        spawnObj(woodenLogs, x, height + 1);
+                    }
                 }
 
             }
@@ -82,6 +87,11 @@ public class ProceduralGeneration : MonoBehaviour
         if (objHolder == stone)
         {
             obj.transform.parent = stoneHolder.transform;
+        }
+
+        if (objHolder == woodenLogs)
+        {
+            obj.transform.parent = woodenLogsHolder.transform;
         }
     }
     #endregion

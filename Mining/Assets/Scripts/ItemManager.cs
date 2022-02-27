@@ -24,7 +24,7 @@ public class ItemManager : MonoBehaviour
         //If it collids with the player then add it to the inventory
         if (collision.gameObject.tag == "Player")
         {
-             bool wasPickedUp = Inventory.instance.Add(item);
+            bool wasPickedUp = Inventory.instance.Add(item);
             if (wasPickedUp)
                 Destroy(gameObject);
         }
