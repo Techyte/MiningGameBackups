@@ -19,6 +19,7 @@ public class BuildingManager : MonoBehaviour
     #region Update
     void Update()
     {
+        obj = currentBuildingBlock;
         //To make sure that we have a block selected as the building block (to avoid nullreference exeption error)
         if (currentBuildingBlock != null)
         {
@@ -28,8 +29,7 @@ public class BuildingManager : MonoBehaviour
                 //Send a Raycast in the mouse direction to see if we can place a block
                 mousePos.transform.position = MainCamera.ScreenToWorldPoint(Input.mousePosition);
                 Vector2 direction = (mousePos.transform.position - player.transform.position).normalized;
-                RaycastHit2D hit = Physics2D.Raycast(player.transform.position, direction, Player.realReach, block);
-                Debug.DrawRay(player.transform.position, direction, Color.red, 1);
+                RaycastHit2D hit = Physics2D.Raycast(player.transform.position, direction, MiningManager.realReach, block);
                 //If we can place a block then run this code
                 if (hit)
                 {
@@ -40,7 +40,6 @@ public class BuildingManager : MonoBehaviour
                     //Send a ray from the block that we hit in the players direction to see what side of the block we should place the block on
                     Vector2 directionsecond = (player.transform.position - blockHit.transform.position).normalized;
                     RaycastHit2D hitsecond = Physics2D.Raycast(blockHit.transform.position, direction, 0.5f, buildPoint);
-                    Debug.DrawRay(blockHit.transform.position, directionsecond, Color.red, 1);
                     if (hitsecond)
                     {
                         #region What side
@@ -61,6 +60,7 @@ public class BuildingManager : MonoBehaviour
                         if (hitsecond.collider.name == "right")
                         {
                             Vector3 finalBlockPos = blockHit.transform.position - buildOfsetleft;
+                            print("Current building block is: " + currentBuildingBlock + ". Obj value is:" + obj);
                             //Make sure that when we place the block it wont be above the build limit
                             if (finalBlockPos.y <= buildLimit)
                             {
@@ -101,7 +101,6 @@ public class BuildingManager : MonoBehaviour
                 }
                 #endregion
             }
-
         }
 
         obj = currentBuildingBlock;

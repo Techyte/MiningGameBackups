@@ -16,9 +16,8 @@ public class Player : MonoBehaviour
     public LayerMask block;
     public static float realReach;
     public Vector3 spawnFallback;
-    [SerializeField] float blockSize, gameReach;
-    [SerializeField] public Transform playerHeadLower, playerHead, playerMiddle;
-    [SerializeField] public static GameObject focus, mouseOver, target;
+    [SerializeField] public Transform playerMiddle;
+    [SerializeField] public static GameObject mouseOver;
     [SerializeField] float maxSpeed = 3.4f, jumpHeight = 6.5f, gravityScale = 1.5f;
 
     bool facingRight = true;
@@ -37,7 +36,6 @@ public class Player : MonoBehaviour
     {
         SpawnTest();
         playerPos = gameObject.transform.position;
-        realReach = gameReach *= blockSize;
         t = transform;
         r2d = GetComponent<Rigidbody2D>();
         mainCollider = GetComponent<CapsuleCollider2D>();
@@ -88,65 +86,6 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) && isGrounded)
         {
             r2d.velocity = new Vector2(r2d.velocity.x, jumpHeight);
-        }
-        #endregion
-
-        #region Mining logic
-        //if the player is locked on to a block then run the code
-        if (target != null)
-        {
-            //If the block is above the player
-            if (target.transform.position.y >= playerMiddle.transform.position.y)
-            {
-                //Send a RayCast out to see if we can mine the block
-                Vector2 direction = (target.transform.position - playerHead.position).normalized;
-
-                RaycastHit2D hit = Physics2D.Raycast(playerHead.transform.position, direction, realReach, block);
-
-                Debug.DrawRay(playerHead.transform.position, direction * 100f, Color.red);
-                //If the block is out of range
-                if (!hit)
-                {
-                    print("Out Of Range");
-                    target = null;
-                    return;
-                }
-
-                //If we can mine the block
-                if (hit.transform.gameObject.tag == "Minable")
-                {
-                    anim.SetBool("PickSwing", true);
-                    focus = target;
-                    target.GetComponent<BlockManager>().Mine();
-                }
-                target = null;
-            }
-            //If the block is below the player
-            else if (target.transform.position.y <= playerMiddle.transform.position.y)
-            {
-                //Send a RayCast out to see if we can mine the block
-                Vector2 direction = (target.transform.position - playerHeadLower.position).normalized;
-
-                RaycastHit2D hit = Physics2D.Raycast(playerHeadLower.transform.position, direction, realReach, block);
-
-                Debug.DrawRay(playerHeadLower.transform.position, direction * realReach, Color.red);
-                //If the block is out of reach
-                if (!hit)
-                {
-                    print("Out Of Range");
-                    target = null;
-                    return;
-                }
-
-                //If we can mine the block
-                if (hit.transform.gameObject.tag == "Minable")
-                {
-                    anim.SetBool("PickSwing", true);
-                    focus = target;
-                    target.GetComponent<BlockManager>().Mine();
-                }
-                target = null;
-            }
         }
         #endregion
     }

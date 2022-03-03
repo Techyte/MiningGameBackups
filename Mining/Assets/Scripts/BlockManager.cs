@@ -33,13 +33,15 @@ public class BlockManager : MonoBehaviour
         sr.sprite = block.texture;
         durability = block.durability;
     }
+
     //for when the mouse clicks on the block
     private void OnMouseDown()
     {
         gameObject.tag = "Minable";
-        Player.target = this.gameObject;
+        MiningManager.target = this.gameObject;
         StartCoroutine(wait());
     }
+
     //For when the mouse hovers over the block
     private void OnMouseEnter()
     {
@@ -72,13 +74,13 @@ public class BlockManager : MonoBehaviour
         #region Logic ifs
 
         //If the play is currently focusing on the block
-        if (Player.focus == this.gameObject)
+        if (MiningManager.focus == this.gameObject)
         {
             overlay.sprite = block.selectedTexture;
         }
 
         //If the player is NOT focusing on the block and the mouse is not hovering over it
-        if (Player.focus != this.gameObject && mouseIsOnBlock == false)
+        if (MiningManager.focus != this.gameObject && mouseIsOnBlock == false)
         {
             overlay.sprite = null;
         }
@@ -92,7 +94,7 @@ public class BlockManager : MonoBehaviour
         #endregion
 
         #region Durability switch
-        //Checks the current durability of the block and changes its texture accordingly
+        //Checks the current durability of the block and changes its overlay texture accordingly
         switch (durability)
         {
             case 1:
@@ -109,7 +111,6 @@ public class BlockManager : MonoBehaviour
                 break;
         }
         #endregion
-
     }
     #endregion
 

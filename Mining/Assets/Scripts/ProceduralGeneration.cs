@@ -8,11 +8,12 @@ public class ProceduralGeneration : MonoBehaviour
     #region variables
     [SerializeField] int width;
     [SerializeField] int minStoneheight, maxStoneHeight;
-    //[SerializeField] GameObject dirt, grass, stone;
-    [SerializeField] GameObject dirtHolder, grassHolder, stoneHolder, woodenLogsHolder;
-    [SerializeField] GameObject dirt, grass, stone, woodenLogs;
+    [SerializeField] GameObject dirtHolder, grassHolder, stoneHolder, treeHolder;
+    [SerializeField] GameObject dirt, grass, stone, tree;
+
     [Range(0, 100)]
     [SerializeField] float heightValue, smoothness;
+
     [SerializeField] float seed;
     #endregion
 
@@ -33,6 +34,7 @@ public class ProceduralGeneration : MonoBehaviour
                 int minStoneSpawnDistance = height - minStoneheight;
                 int maxStoneSpawnDistance = height - maxStoneHeight;
                 int totalStoneSpawnDistance = Random.Range(minStoneSpawnDistance, maxStoneSpawnDistance);
+
                 //Perlin noise.
                 for (int y = 0; y < height; y++)//This will help spawn a tile on the y axis
                 {
@@ -48,6 +50,7 @@ public class ProceduralGeneration : MonoBehaviour
                     }
 
                 }
+
                 if (totalStoneSpawnDistance == height)
                 {
                     // spawnObj(stone, x, height);
@@ -60,7 +63,7 @@ public class ProceduralGeneration : MonoBehaviour
                     int randomInt = Random.Range(0, 50);
                     if (randomInt == 1)
                     {
-                        spawnObj(woodenLogs, x, height + 1);
+                        spawnObj(tree, x, height + 1);
                     }
                 }
 
@@ -89,9 +92,9 @@ public class ProceduralGeneration : MonoBehaviour
             obj.transform.parent = stoneHolder.transform;
         }
 
-        if (objHolder == woodenLogs)
+        if (objHolder == tree)
         {
-            obj.transform.parent = woodenLogsHolder.transform;
+            obj.transform.parent = treeHolder.transform;
         }
     }
     #endregion
