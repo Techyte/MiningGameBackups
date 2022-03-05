@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CapsuleCollider2D))]
@@ -10,6 +11,7 @@ public class Player : MonoBehaviour
     #region Variables
     //Variables
     // Move player in 2D space
+    public static GameObject player;
     public Animator anim;
     public static bool isMining = true;
     public static Vector3 playerPos;
@@ -34,6 +36,7 @@ public class Player : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        player = gameObject;
         SpawnTest();
         playerPos = gameObject.transform.position;
         t = transform;

@@ -50,7 +50,8 @@ public class Inventory : MonoBehaviour
     //Function to remove items from the inventory (can be called from anywhere)
     public void Remove(Item item) 
     {
-        items.Remove(item);
+        if(items.Contains(item))
+            items.Remove(item);
 
         if (onItemChangedCallback != null)
         {

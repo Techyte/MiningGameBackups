@@ -6,9 +6,9 @@ using UnityEngine.Tilemaps;
 public class ProceduralGeneration : MonoBehaviour
 {
     #region variables
-    [SerializeField] int width;
+    [SerializeField] int initialChunkGenAmount;
     [SerializeField] int minStoneheight, maxStoneHeight;
-    [SerializeField] GameObject dirtHolder, grassHolder, stoneHolder, treeHolder;
+    [SerializeField] GameObject dirtHolder, grassHolder, stoneHolder, treeHolder, chunkHolder;
     [SerializeField] GameObject dirt, grass, stone, tree;
 
     [Range(0, 100)]
@@ -28,74 +28,80 @@ public class ProceduralGeneration : MonoBehaviour
     #region Generation of blocks
     void Generation()
     {
-            for (int x = 0; x < width; x++)//This will help spawn a tile on the x axis
+        GameObject currentChunk = CreatNewChunk();
+        for (int x = 0; x < initialChunkGenAmount * 16; x++)//This will help spawn a tile on the x axis
+        {
+            if (x != 0)
             {
-                int height = Mathf.RoundToInt(heightValue * Mathf.PerlinNoise(x / smoothness, seed));
-                int minStoneSpawnDistance = height - minStoneheight;
-                int maxStoneSpawnDistance = height - maxStoneHeight;
-                int totalStoneSpawnDistance = Random.Range(minStoneSpawnDistance, maxStoneSpawnDistance);
-
-                //Perlin noise.
-                for (int y = 0; y < height; y++)//This will help spawn a tile on the y axis
+                if (IsDivisibleBy(x))
                 {
-                    if (y < totalStoneSpawnDistance)
-                    {
-                        //spawnObj(stone, x, y);
-                        spawnObj(stone, x, y);
-                    }
-                    else
-                    {
-                        // spawnObj(dirt, x, y);
-                        spawnObj(dirt, x, y);
-                    }
-
+                    currentChunk = CreatNewChunk();
                 }
+            }
 
-                if (totalStoneSpawnDistance == height)
+            int height = Mathf.RoundToInt(heightValue * Mathf.PerlinNoise(x / smoothness, seed));
+            int minStoneSpawnDistance = height - minStoneheight;
+            int maxStoneSpawnDistance = height - maxStoneHeight;
+            int totalStoneSpawnDistance = Random.Range(minStoneSpawnDistance, maxStoneSpawnDistance);
+
+            //Perlin noise.
+            for (int y = 0; y < height; y++)//This will help spawn a tile on the y axis
+            {
+                if (y < totalStoneSpawnDistance)
                 {
-                    // spawnObj(stone, x, height);
-                    spawnObj(stone, x, height);
+                    //spawnObj(stone, x, y);
+                    spawnObj(stone, x, y, currentChunk);
                 }
                 else
                 {
-                    //spawnObj(grass, x, height);
-                    spawnObj(grass, x, height);
-                    int randomInt = Random.Range(0, 50);
-                    if (randomInt == 1)
-                    {
-                        spawnObj(tree, x, height + 1);
-                    }
+                    // spawnObj(dirt, x, y);
+                    spawnObj(dirt, x, y, currentChunk);
                 }
-
             }
+
+            if (totalStoneSpawnDistance == height)
+            {
+                // spawnObj(stone, x, height);
+                spawnObj(stone, x, height, currentChunk);
+            }
+            else
+            {
+                // spawnObj(grass, x, height);
+                spawnObj(grass, x, height, currentChunk);
+                int randomInt = Random.Range(0, 25);
+                if (randomInt == 1)
+                {
+                    spawnObj(tree, x, height + 1, currentChunk);
+                }
+            }
+        }
     }
     #endregion
 
+    bool IsDivisibleBy(int n)
+    {
+        if ((n & 15) == 0)
+            return true;
+
+        return false;
+    }
+
+    GameObject CreatNewChunk()
+    {
+        GameObject newChunk = new GameObject("Chunk");
+        newChunk.transform.parent = chunkHolder.transform;
+        newChunk.AddComponent<Chunk>();
+
+        return newChunk;
+    }
+
     #region Spawn function
-    void spawnObj(GameObject obj, int width, int height)//What ever we spawn will be a child of our procedural generation gameObj
+    void spawnObj(GameObject obj, int width, int height, GameObject holder)//What ever we spawn will be a child of our procedural generation gameObj
     {
         GameObject objHolder = obj;
         obj = Instantiate(obj, new Vector2(width, height), Quaternion.identity);
 
-        if (objHolder == grass)
-        {
-            obj.transform.parent = grassHolder.transform;
-        }
-
-        if (objHolder == dirt)
-        {
-            obj.transform.parent = dirtHolder.transform;
-        }
-
-        if (objHolder == stone)
-        {
-            obj.transform.parent = stoneHolder.transform;
-        }
-
-        if (objHolder == tree)
-        {
-            obj.transform.parent = treeHolder.transform;
-        }
+        obj.transform.parent = holder.transform;
     }
     #endregion
 

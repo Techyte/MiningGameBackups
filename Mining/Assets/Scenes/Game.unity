@@ -291,37 +291,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 84294942}
   m_CullTransparentMesh: 1
---- !u!1 &86057904
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 86057905}
-  m_Layer: 0
-  m_Name: Grass
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &86057905
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 86057904}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 708534172}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &136700447
 GameObject:
   m_ObjectHideFlags: 0
@@ -679,6 +648,37 @@ Transform:
   m_Father: {fileID: 875786712}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &416763397
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 416763398}
+  m_Layer: 0
+  m_Name: Chunk Holder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &416763398
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 416763397}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1862038580}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &424117688
 GameObject:
   m_ObjectHideFlags: 0
@@ -966,7 +966,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 42, y: 26, z: -9.86}
+  m_LocalPosition: {x: 0.2, y: 1.4, z: -9.86}
   m_LocalScale: {x: 0.9, y: 0.8625, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1094,7 +1094,7 @@ GameObject:
   m_Component:
   - component: {fileID: 582304400}
   m_Layer: 0
-  m_Name: BuildedBlocks
+  m_Name: BuiltBlocksHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1107,47 +1107,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 582304399}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 708534172}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &708534171
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 708534172}
-  m_Layer: 0
-  m_Name: BlockContainers
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &708534172
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 708534171}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 86057905}
-  - {fileID: 886875258}
-  - {fileID: 2133148294}
-  - {fileID: 582304400}
-  - {fileID: 1866295169}
   m_Father: {fileID: 1862038580}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1472,7 +1436,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 875786711}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 42, y: 26, z: -7.7}
+  m_LocalPosition: {x: 0, y: 26, z: 0}
   m_LocalScale: {x: 0.9, y: 0.8625, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1564,37 +1528,6 @@ MonoBehaviour:
   block:
     serializedVersion: 2
     m_Bits: 16384
---- !u!1 &886875257
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 886875258}
-  m_Layer: 0
-  m_Name: Dirt
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &886875258
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 886875257}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 708534172}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &889568084
 GameObject:
   m_ObjectHideFlags: 0
@@ -3276,7 +3209,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1862038580}
-  - component: {fileID: 1862038581}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -3296,66 +3228,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 708534172}
+  - {fileID: 582304400}
+  - {fileID: 416763398}
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1862038581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1862038579}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cff2ac579ee8bb44bd65aaf3388f3c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  width: 80
-  minStoneheight: 10
-  maxStoneHeight: 15
-  dirtHolder: {fileID: 886875257}
-  grassHolder: {fileID: 86057904}
-  stoneHolder: {fileID: 2133148293}
-  treeHolder: {fileID: 1866295168}
-  dirt: {fileID: 6252554606140566786, guid: ace2311a3ddde1f448e8bcbc85a023c8, type: 3}
-  grass: {fileID: 5331034320891986594, guid: 3609845e3afbed140a5562ac9e129dc1, type: 3}
-  stone: {fileID: 78139289374354417, guid: b20b0376af7199f4ebb12862cc3de8ac, type: 3}
-  tree: {fileID: 4828368382751009123, guid: bdb039a363400684eaf0b1fc3b6041c4, type: 3}
-  heightValue: 50
-  smoothness: 50
-  seed: 0
---- !u!1 &1866295168
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1866295169}
-  m_Layer: 0
-  m_Name: Tree
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1866295169
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1866295168}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 708534172}
-  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1920078269
 GameObject:
@@ -3500,6 +3376,8 @@ GameObject:
   - component: {fileID: 2061712471}
   - component: {fileID: 2061712472}
   - component: {fileID: 2061712473}
+  - component: {fileID: 2061712474}
+  - component: {fileID: 2061712475}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3558,10 +3436,6 @@ MonoBehaviour:
     m_Bits: 65536
   MainCamera: {fileID: 519420031}
   obj: {fileID: 0}
-  buildOfsetdown: {x: 0, y: 1, z: 0}
-  buildOfsetup: {x: 0, y: -1, z: 0}
-  buildOfsetright: {x: -1, y: 0, z: 0}
-  buildOfsetleft: {x: 1, y: 0, z: 0}
   BuildHolder: {fileID: 582304399}
   mousePos: {fileID: 429337159}
   buildLimit: 60
@@ -3578,6 +3452,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emptyBlockSRC: {fileID: 11400000, guid: 21a5301a0d918304290ddfa88e9d5a41, type: 2}
+--- !u!114 &2061712474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061712469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cff2ac579ee8bb44bd65aaf3388f3c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialChunkGenAmount: 5
+  minStoneheight: 10
+  maxStoneHeight: 15
+  dirtHolder: {fileID: 0}
+  grassHolder: {fileID: 0}
+  stoneHolder: {fileID: 0}
+  treeHolder: {fileID: 0}
+  chunkHolder: {fileID: 416763397}
+  dirt: {fileID: 6252554606140566786, guid: ace2311a3ddde1f448e8bcbc85a023c8, type: 3}
+  grass: {fileID: 5331034320891986594, guid: 3609845e3afbed140a5562ac9e129dc1, type: 3}
+  stone: {fileID: 78139289374354417, guid: b20b0376af7199f4ebb12862cc3de8ac, type: 3}
+  tree: {fileID: 4828368382751009123, guid: bdb039a363400684eaf0b1fc3b6041c4, type: 3}
+  heightValue: 50
+  smoothness: 50
+  seed: 0
+--- !u!114 &2061712475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061712469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c519c44650ff8824b8eb84268cb3d281, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2094998247
 GameObject:
   m_ObjectHideFlags: 0
@@ -3633,37 +3546,6 @@ MonoBehaviour:
   blockInSlot: {fileID: 5331034320891986594, guid: 3609845e3afbed140a5562ac9e129dc1, type: 3}
   blockRenderer: {fileID: 1605486723}
   selectedRenderer: {fileID: 312043997}
---- !u!1 &2133148293
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2133148294}
-  m_Layer: 0
-  m_Name: Stone
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2133148294
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2133148293}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 708534172}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2143837579
 GameObject:
   m_ObjectHideFlags: 0
