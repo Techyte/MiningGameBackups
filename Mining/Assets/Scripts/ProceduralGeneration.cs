@@ -8,8 +8,9 @@ public class ProceduralGeneration : MonoBehaviour
     #region variables
     [SerializeField] int initialChunkGenAmount;
     [SerializeField] int minStoneheight, maxStoneHeight;
-    [SerializeField] GameObject dirtHolder, grassHolder, stoneHolder, treeHolder, chunkHolder;
-    [SerializeField] GameObject dirt, grass, stone, tree;
+    [SerializeField] GameObject chunkHolder;
+    [SerializeField] Tile dirt, grass, stone, tree;
+    [SerializeField] Tilemap map;
 
     [Range(0, 100)]
     [SerializeField] float heightValue, smoothness;
@@ -49,30 +50,28 @@ public class ProceduralGeneration : MonoBehaviour
             {
                 if (y < totalStoneSpawnDistance)
                 {
-                    //spawnObj(stone, x, y);
-                    spawnObj(stone, x, y, currentChunk);
+                    map.SetTile(new Vector3Int(x, y, 0), stone);
                 }
                 else
                 {
-                    // spawnObj(dirt, x, y);
-                    spawnObj(dirt, x, y, currentChunk);
+                    map.SetTile(new Vector3Int(x, y, 0), dirt);
                 }
             }
 
             if (totalStoneSpawnDistance == height)
             {
-                // spawnObj(stone, x, height);
-                spawnObj(stone, x, height, currentChunk);
+                map.SetTile(new Vector3Int(x, height, 0), stone);
             }
             else
             {
-                // spawnObj(grass, x, height);
-                spawnObj(grass, x, height, currentChunk);
+                map.SetTile(new Vector3Int(x, height, 0), grass);
+                /*
                 int randomInt = Random.Range(0, 25);
                 if (randomInt == 1)
                 {
-                    spawnObj(tree, x, height + 1, currentChunk);
+                    // spawnObj(tree, x, height + 1, currentChunk);
                 }
+                */
             }
         }
     }
@@ -90,7 +89,6 @@ public class ProceduralGeneration : MonoBehaviour
     {
         GameObject newChunk = new GameObject("Chunk");
         newChunk.transform.parent = chunkHolder.transform;
-        newChunk.AddComponent<Chunk>();
 
         return newChunk;
     }

@@ -10,6 +10,5 @@ public class Block : ScriptableObject
     public float durability;
     public Sprite texture;
     public GameObject[] drops;
-    public Sprite[] breakTextures;
     public Sprite hoverTexture;
 }

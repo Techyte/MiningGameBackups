@@ -12,6 +12,7 @@ public class BlockManager : MonoBehaviour
     public SpriteRenderer sr;
     public Block block;
     public float durability;
+    float maxDurability;
     Sprite[] breakTextures;
     GameObject[] Posdrops;
     bool mouseIsOnBlock;
@@ -29,9 +30,9 @@ public class BlockManager : MonoBehaviour
     void Start()
     {
         Posdrops = block.drops;
-        breakTextures = block.breakTextures;
         sr.sprite = block.texture;
         durability = block.durability;
+        breakTextures = GameManager.blockBreakingTextures;
     }
 
     //for when the mouse clicks on the block
@@ -91,28 +92,31 @@ public class BlockManager : MonoBehaviour
             Drop();
             Destroy(gameObject);
         }
-        #endregion
+        /*
 
-        #region Durability switch
-        //Checks the current durability of the block and changes its overlay texture accordingly
-        switch (durability)
+        int percentageDurability = Mathf.RoundToInt(PercentageOf(durability, maxDurability));
+        if(percentageDurability < 25)
         {
-            case 1:
-                breakingOverlay.sprite = breakTextures[0];
-                break;
-            case 2:
-                breakingOverlay.sprite = breakTextures[1];
-                break;
-            case 3:
-                breakingOverlay.sprite = breakTextures[2];
-                break;
-            case 4:
-                breakingOverlay.sprite = breakTextures[3];
-                break;
+            breakingOverlay.sprite = breakTextures[0];
         }
+        else if(percentageDurability < 50)
+        {
+            breakingOverlay.sprite = breakTextures[1];
+        }
+        else if(percentageDurability < 75)
+        {
+            breakingOverlay.sprite = breakTextures[2];
+        }*/
+
         #endregion
     }
     #endregion
+
+    float PercentageOf(float smaller, float max)
+    {
+        float resault = max / smaller;
+        return resault;
+    }
 
     #region IEnumerators
     IEnumerator wait()
