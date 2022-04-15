@@ -92,7 +92,6 @@ public class BlockManager : MonoBehaviour
             Drop();
             Destroy(gameObject);
         }
-        /*
 
         int percentageDurability = Mathf.RoundToInt(PercentageOf(durability, maxDurability));
         if(percentageDurability < 25)
@@ -106,8 +105,7 @@ public class BlockManager : MonoBehaviour
         else if(percentageDurability < 75)
         {
             breakingOverlay.sprite = breakTextures[2];
-        }*/
-
+        }
         #endregion
     }
     #endregion

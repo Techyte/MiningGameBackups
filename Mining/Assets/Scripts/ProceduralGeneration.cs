@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class ProceduralGeneration : MonoBehaviour
 {
@@ -9,8 +8,7 @@ public class ProceduralGeneration : MonoBehaviour
     [SerializeField] int initialChunkGenAmount;
     [SerializeField] int minStoneheight, maxStoneHeight;
     [SerializeField] GameObject chunkHolder;
-    [SerializeField] Tile dirt, grass, stone, tree;
-    [SerializeField] Tilemap map;
+    [SerializeField] GameObject dirt, grass, stone, tree;
 
     [Range(0, 100)]
     [SerializeField] float heightValue, smoothness;
@@ -50,28 +48,26 @@ public class ProceduralGeneration : MonoBehaviour
             {
                 if (y < totalStoneSpawnDistance)
                 {
-                    map.SetTile(new Vector3Int(x, y, 0), stone);
+                    spawnObj(stone, x, y, currentChunk);
                 }
                 else
                 {
-                    map.SetTile(new Vector3Int(x, y, 0), dirt);
+                    spawnObj(dirt, x, y, currentChunk);
                 }
             }
 
             if (totalStoneSpawnDistance == height)
             {
-                map.SetTile(new Vector3Int(x, height, 0), stone);
+                spawnObj(stone, x, height, currentChunk);
             }
             else
             {
-                map.SetTile(new Vector3Int(x, height, 0), grass);
-                /*
+                spawnObj(grass, x, height, currentChunk);
                 int randomInt = Random.Range(0, 25);
                 if (randomInt == 1)
                 {
                     // spawnObj(tree, x, height + 1, currentChunk);
                 }
-                */
             }
         }
     }

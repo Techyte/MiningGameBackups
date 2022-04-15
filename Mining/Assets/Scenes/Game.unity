@@ -3650,11 +3650,10 @@ MonoBehaviour:
   minStoneheight: 10
   maxStoneHeight: 15
   chunkHolder: {fileID: 416763397}
-  dirt: {fileID: 11400000, guid: fd974c0ce541e2b4a8d1bda7f5126cd6, type: 2}
-  grass: {fileID: 11400000, guid: 3faea4a1a7f410b459abc6de47c998a9, type: 2}
-  stone: {fileID: 11400000, guid: 992aba56e9d29eb48836817e96bb3841, type: 2}
+  dirt: {fileID: 6252554606140566786, guid: ace2311a3ddde1f448e8bcbc85a023c8, type: 3}
+  grass: {fileID: 5331034320891986594, guid: 3609845e3afbed140a5562ac9e129dc1, type: 3}
+  stone: {fileID: 78139289374354417, guid: b20b0376af7199f4ebb12862cc3de8ac, type: 3}
   tree: {fileID: 4828368382751009123, guid: bdb039a363400684eaf0b1fc3b6041c4, type: 3}
-  map: {fileID: 497977495}
   heightValue: 50
   smoothness: 50
   seed: 0
