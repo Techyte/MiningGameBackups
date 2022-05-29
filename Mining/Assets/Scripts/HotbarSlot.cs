@@ -12,7 +12,7 @@ public class HotbarSlot : MonoBehaviour
     {
         if (blockInSlot != Hotbar.emptyBlock)
         {
-            blockRenderer.sprite = blockInSlot.GetComponent<BlockManager>().block.texture;
+            //blockRenderer.sprite = blockInSlot.GetComponent<BlockManager>().block.texture;
         }
 
         if (Hotbar.currentSelectedSlot == slotID)
@@ -21,7 +21,7 @@ public class HotbarSlot : MonoBehaviour
 
             if (blockInSlot != Hotbar.emptyBlock)
             {
-                blockRenderer.sprite = blockInSlot.GetComponent<BlockManager>().block.texture;
+                //blockRenderer.sprite = blockInSlot.GetComponent<BlockManager>().block.texture;
                 BuildingManager.currentBuildingBlock = blockInSlot;
             }
         }

@@ -16,11 +16,7 @@ MonoBehaviour:
   name: Stone
   durability: 5
   texture: {fileID: 21300000, guid: 4de50e06dca95c047b39c6f8366400d0, type: 3}
+  tile: {fileID: 11400000, guid: 992aba56e9d29eb48836817e96bb3841, type: 2}
   drops:
   - {fileID: 6832648174067225870, guid: 8cd2d00b8a4218545a508ba755ff2411, type: 3}
-  breakTextures:
-  - {fileID: 21300000, guid: 999fa8994aaa6f040bf88f093d73f1f7, type: 3}
-  - {fileID: 21300000, guid: 02e81219b5cf94a44b6d733f2daa8d1d, type: 3}
-  - {fileID: 21300000, guid: af7a0ff50db748244910ec336c2b9ef8, type: 3}
-  - {fileID: 21300000, guid: c646a32be22e5784b8ae6363c71bbf2c, type: 3}
   hoverTexture: {fileID: 21300000, guid: 637ca63f06bd3884abbc8b5bffb15266, type: 3}

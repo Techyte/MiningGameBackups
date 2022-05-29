@@ -16,10 +16,6 @@ MonoBehaviour:
   name: Leaves
   durability: 5
   texture: {fileID: 21300000, guid: 61bdc0b6d3d20144c9d3539991259970, type: 3}
+  tile: {fileID: 11400000, guid: a72d6d6e018c9aa49b37b71d692a5165, type: 2}
   drops: []
-  breakTextures:
-  - {fileID: 21300000, guid: 999fa8994aaa6f040bf88f093d73f1f7, type: 3}
-  - {fileID: 21300000, guid: 02e81219b5cf94a44b6d733f2daa8d1d, type: 3}
-  - {fileID: 21300000, guid: af7a0ff50db748244910ec336c2b9ef8, type: 3}
-  - {fileID: 21300000, guid: c646a32be22e5784b8ae6363c71bbf2c, type: 3}
   hoverTexture: {fileID: 21300000, guid: 637ca63f06bd3884abbc8b5bffb15266, type: 3}

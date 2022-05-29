@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 [CreateAssetMenu(fileName = "New Block", menuName = "Block")]
 public class Block : ScriptableObject
@@ -9,6 +8,7 @@ public class Block : ScriptableObject
     public new string name;
     public float durability;
     public Sprite texture;
+    public TileBase tile;
     public GameObject[] drops;
     public Sprite hoverTexture;
 }

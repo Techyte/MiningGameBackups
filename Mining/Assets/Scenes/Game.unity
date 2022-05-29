@@ -657,6 +657,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 416763398}
+  - component: {fileID: 416763399}
   m_Layer: 0
   m_Name: Chunk Holder
   m_TagString: Untagged
@@ -679,6 +680,18 @@ Transform:
   m_Father: {fileID: 1862038580}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!156049354 &416763399
+Grid:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 416763397}
+  m_Enabled: 1
+  m_CellSize: {x: 1, y: 1, z: 1}
+  m_CellGap: {x: 0, y: 0, z: 0}
+  m_CellLayout: 0
+  m_CellSwizzle: 0
 --- !u!1 &424117688
 GameObject:
   m_ObjectHideFlags: 0
@@ -1023,7 +1036,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
-  - component: {fileID: 519420030}
+  - component: {fileID: 519420033}
   m_Layer: 9
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1039,19 +1052,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
---- !u!114 &519420030
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad14a798e03218a45b9a30ff7f42f803, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  followTransform: {fileID: 875786712}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -1110,6 +1110,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad14a798e03218a45b9a30ff7f42f803, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  followTransform: {fileID: 875786712}
 --- !u!1 &532899620
 GameObject:
   m_ObjectHideFlags: 0
@@ -2817,6 +2830,37 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1216232377
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1216232378}
+  m_Layer: 0
+  m_Name: BlockMousePos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1216232378
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1216232377}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1275008898
 GameObject:
   m_ObjectHideFlags: 0
@@ -3560,6 +3604,7 @@ GameObject:
   - component: {fileID: 2061712473}
   - component: {fileID: 2061712474}
   - component: {fileID: 2061712475}
+  - component: {fileID: 2061712476}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3613,12 +3658,8 @@ MonoBehaviour:
   block:
     serializedVersion: 2
     m_Bits: 16384
-  buildPoint:
-    serializedVersion: 2
-    m_Bits: 65536
   MainCamera: {fileID: 519420031}
   obj: {fileID: 0}
-  BuildHolder: {fileID: 582304399}
   mousePos: {fileID: 429337159}
   buildLimit: 60
 --- !u!114 &2061712473
@@ -3650,10 +3691,9 @@ MonoBehaviour:
   minStoneheight: 10
   maxStoneHeight: 15
   chunkHolder: {fileID: 416763397}
-  dirt: {fileID: 6252554606140566786, guid: ace2311a3ddde1f448e8bcbc85a023c8, type: 3}
-  grass: {fileID: 5331034320891986594, guid: 3609845e3afbed140a5562ac9e129dc1, type: 3}
-  stone: {fileID: 78139289374354417, guid: b20b0376af7199f4ebb12862cc3de8ac, type: 3}
-  tree: {fileID: 4828368382751009123, guid: bdb039a363400684eaf0b1fc3b6041c4, type: 3}
+  dirtBlock: {fileID: 11400000, guid: 6fa9637c8c359fa419e1f35af2cd0365, type: 2}
+  grassBlock: {fileID: 11400000, guid: efada43298aec4843a082b2587a17816, type: 2}
+  stoneBlock: {fileID: 11400000, guid: e42cf6a728472194eb8c0c12097c2c25, type: 2}
   heightValue: 50
   smoothness: 50
   seed: 0
@@ -3674,6 +3714,20 @@ MonoBehaviour:
   - {fileID: 21300000, guid: af7a0ff50db748244910ec336c2b9ef8, type: 3}
   - {fileID: 21300000, guid: 02e81219b5cf94a44b6d733f2daa8d1d, type: 3}
   - {fileID: 21300000, guid: 999fa8994aaa6f040bf88f093d73f1f7, type: 3}
+--- !u!114 &2061712476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061712469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1342396f6dd78742939e92d73ee8a55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCam: {fileID: 519420031}
+  blockMousePos: {fileID: 1216232378}
 --- !u!1 &2094998247
 GameObject:
   m_ObjectHideFlags: 0

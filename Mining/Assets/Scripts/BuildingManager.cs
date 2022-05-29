@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BuildingManager : MonoBehaviour
@@ -7,11 +5,10 @@ public class BuildingManager : MonoBehaviour
     #region Variables
     //Variables
     [SerializeField] Transform player;
-    [SerializeField] LayerMask block, buildPoint;
+    [SerializeField] LayerMask block;
     [SerializeField] Camera MainCamera;
     [SerializeField] GameObject obj;
-    Vector3 buildOfsetDown = new Vector3(0, 1, 0), buildOfsetUp = new Vector3(0, -1, 0), buildOfsetRight = new Vector3(-1, 0, 0), buildOfsetLeft = new Vector3(1, 0, 0);
-    [SerializeField] GameObject BuildHolder, mousePos;
+    [SerializeField] GameObject mousePos;
     [SerializeField] int buildLimit;
     public static GameObject currentBuildingBlock;
     #endregion
@@ -21,7 +18,7 @@ public class BuildingManager : MonoBehaviour
     {
         obj = currentBuildingBlock;
         //To make sure that we have a block selected as the building block (to avoid nullreference exeption error)
-        if (currentBuildingBlock != null)
+        if (currentBuildingBlock)
         {
             if (Input.GetMouseButtonDown(1))
             {
@@ -33,36 +30,7 @@ public class BuildingManager : MonoBehaviour
                 //If we can place a block then run this code
                 if (hit)
                 {
-                    #region Second Raycast
-                    //Set BlockHit equal to whatever block we hit so we can use its position later
-                    GameObject blockHit = hit.transform.gameObject;
-
-                    //Send a ray from the block that we hit in the players direction to see what side of the block we should place the block on
-                    Vector2 directionsecond = (player.transform.position - blockHit.transform.position).normalized;
-                    RaycastHit2D hitsecond = Physics2D.Raycast(blockHit.transform.position, direction, 0.5f, buildPoint);
-                    if (hitsecond)
-                    {
-                        #region What side
-
-                        switch (hitsecond.collider.name)
-                        {
-                            case "left":
-                                PlaceBlock(blockHit.transform.position - buildOfsetLeft);
-                                Debug.Log("Placed it left");
-                                break;
-                            case "right":
-                                PlaceBlock(blockHit.transform.position - buildOfsetRight);
-                                break;
-                            case "up":
-                                PlaceBlock(blockHit.transform.position - buildOfsetUp);
-                                break;
-                            case "down":
-                                PlaceBlock(blockHit.transform.position - buildOfsetDown);
-                                break;
-                        }
-                        #endregion
-                    }
-                    #endregion
+                    PlaceBlock((Vector2)hit.transform.position + hit.normal, hit.transform.parent);
                 }
                 #endregion
             }
@@ -72,13 +40,13 @@ public class BuildingManager : MonoBehaviour
     }
     #endregion
 
-    public void PlaceBlock(Vector3 finalBlockPos)
+    public void PlaceBlock(Vector3 finalBlockPos, Transform chunk)
     {
         //Make sure that when we place the block it wont be above the build limit
         if (finalBlockPos.y <= buildLimit)
         {
             obj = Instantiate(obj, finalBlockPos, Quaternion.identity);
-            obj.transform.parent = BuildHolder.transform;
+            obj.transform.parent = chunk;
             return;
         }
     }

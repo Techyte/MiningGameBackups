@@ -43,7 +43,7 @@ public class MiningManager : MonoBehaviour
                 {
                     anim.SetBool("PickSwing", true);
                     focus = target;
-                    target.GetComponent<BlockManager>().Mine();
+                    //target.GetComponent<BlockManager>().Mine();
                 }
                 target = null;
             }
@@ -69,7 +69,7 @@ public class MiningManager : MonoBehaviour
                 {
                     anim.SetBool("PickSwing", true);
                     focus = target;
-                    target.GetComponent<BlockManager>().Mine();
+                    //target.GetComponent<BlockManager>().Mine();
                 }
                 target = null;
             }
