@@ -3605,6 +3605,7 @@ GameObject:
   - component: {fileID: 2061712474}
   - component: {fileID: 2061712475}
   - component: {fileID: 2061712476}
+  - component: {fileID: 2061712477}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3694,9 +3695,10 @@ MonoBehaviour:
   dirtBlock: {fileID: 11400000, guid: 6fa9637c8c359fa419e1f35af2cd0365, type: 2}
   grassBlock: {fileID: 11400000, guid: efada43298aec4843a082b2587a17816, type: 2}
   stoneBlock: {fileID: 11400000, guid: e42cf6a728472194eb8c0c12097c2c25, type: 2}
+  chunkWidth: 16
+  _chunkManager: {fileID: 2061712477}
   heightValue: 50
   smoothness: 50
-  seed: 0
 --- !u!114 &2061712475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3728,6 +3730,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCam: {fileID: 519420031}
   blockMousePos: {fileID: 1216232378}
+  player: {fileID: 875786712}
+  reach: 10
+--- !u!114 &2061712477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061712469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d74f7a870e26b34ca27544a01ace58e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentPlayerChunk: 0
+  chunkHolder: {fileID: 416763398}
+  renderDistance: 5
+  minStoneheight: 10
+  maxStoneHeight: 15
+  dirtBlock: {fileID: 11400000, guid: 6fa9637c8c359fa419e1f35af2cd0365, type: 2}
+  grassBlock: {fileID: 11400000, guid: efada43298aec4843a082b2587a17816, type: 2}
+  stoneBlock: {fileID: 11400000, guid: e42cf6a728472194eb8c0c12097c2c25, type: 2}
+  heightValue: 50
+  smoothness: 50
 --- !u!1 &2094998247
 GameObject:
   m_ObjectHideFlags: 0

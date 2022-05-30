@@ -9,11 +9,12 @@ public class ProceduralGeneration : MonoBehaviour
     [SerializeField] GameObject chunkHolder;
     [SerializeField] private Block dirtBlock, grassBlock, stoneBlock;
     [SerializeField] private int chunkWidth = 16;
+    [SerializeField] private ChunkManager _chunkManager;
 
     [Range(0, 100)]
     [SerializeField] float heightValue, smoothness;
 
-    [SerializeField] float seed;
+    public static float seed;
     #endregion
 
     #region Start
@@ -68,6 +69,11 @@ public class ProceduralGeneration : MonoBehaviour
             }
             currentChunk.GetComponent<Chunk>().UpdateChunk();
             currentChunkId++;
+            
+            Debug.Log(_chunkManager.currentWorldData);
+            
+            _chunkManager.currentWorldData.chunks.TryAdd((int)currentChunk.transform.position.x, currentChunk.GetComponent<Chunk>());
+
             currentChunk = CreatNewChunk(currentChunkId);
         }
     }
