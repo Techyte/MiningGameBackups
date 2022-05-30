@@ -8,6 +8,7 @@ public class ProceduralGeneration : MonoBehaviour
     [SerializeField] int minStoneheight, maxStoneHeight;
     [SerializeField] GameObject chunkHolder;
     [SerializeField] private Block dirtBlock, grassBlock, stoneBlock;
+    [SerializeField] private int chunkWidth = 16;
 
     [Range(0, 100)]
     [SerializeField] float heightValue, smoothness;
@@ -30,9 +31,10 @@ public class ProceduralGeneration : MonoBehaviour
         GameObject currentChunk = CreatNewChunk(currentChunkId);
         for (int i = 0; i < initialChunkGenAmount; i++)
         {
-            for (int x = 0; x < 16; x++)
+            for (int x = 0; x < chunkWidth; x++)
             {
-                int height = Mathf.RoundToInt(heightValue * Mathf.PerlinNoise(x / smoothness, seed));
+                int trueBuildId = x +(currentChunkId * chunkWidth);
+                int height = Mathf.RoundToInt(heightValue * Mathf.PerlinNoise(trueBuildId / smoothness, seed));
                 int minStoneSpawnDistance = height - minStoneheight;
                 int maxStoneSpawnDistance = height - maxStoneHeight;
                 int totalStoneSpawnDistance = Random.Range(minStoneSpawnDistance, maxStoneSpawnDistance);
@@ -73,7 +75,7 @@ public class ProceduralGeneration : MonoBehaviour
 
     bool IsDivisibleBy(int n)
     {
-        if ((n & 15) == 0)
+        if ((n & chunkWidth-1) == 0)
             return true;
 
         return false;
@@ -84,7 +86,7 @@ public class ProceduralGeneration : MonoBehaviour
         GameObject newChunk = new GameObject("Chunk " + currentChunkId);
         newChunk.transform.parent = chunkHolder.transform;
 
-        Vector2 newPos = new Vector2(currentChunkId * 16, 0);
+        Vector2 newPos = new Vector2(currentChunkId * chunkWidth, 0);
         newChunk.transform.position = newPos;
         
         newChunk.AddComponent<Chunk>().Initilize();

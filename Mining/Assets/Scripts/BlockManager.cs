@@ -19,7 +19,17 @@ public class BlockManager : MonoBehaviour
                 blockMousePos.transform.parent = colliders[0].transform;
                 if (colliders[0].GetComponent<Tilemap>())
                 {
-                    Debug.Log(blockMousePos.transform.localPosition);
+                    Tilemap tilemap = colliders[0].GetComponent<Tilemap>();
+                    Chunk chunk = colliders[0].GetComponent<Chunk>();
+                    Vector2Int blockPos = new Vector2Int();
+                    blockPos.x = Mathf.FloorToInt(blockMousePos.transform.localPosition.x);
+                    blockPos.y = Mathf.FloorToInt(blockMousePos.transform.localPosition.y);
+
+                    if (tilemap.GetTile((Vector3Int)blockPos))
+                    {
+                        Debug.Log(tilemap.GetTile((Vector3Int)blockPos));
+                        chunk.DamageBlock(blockPos, 1);
+                    }
                 }
             }
         }
