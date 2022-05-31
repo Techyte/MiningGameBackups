@@ -66,7 +66,8 @@ public class ChunkManager : MonoBehaviour
             {
                 Debug.Log("Generating A New Chunk");
                 currentChunk = GenerateNewChunk(i);
-                currentWorldData.chunks.Add((int)currentChunk.transform.position.x/16, Chunk.ConvertToChunkData(currentChunk));
+                Debug.Log(currentChunk.transform.position.x / 16);
+                //currentWorldData.chunks.Add((int)currentChunk.transform.position.x/16, Chunk.ConvertToChunkData(currentChunk));
             }
 
             currentChunk.transform.position = new Vector3(i * 16, 0, 0);
@@ -78,18 +79,13 @@ public class ChunkManager : MonoBehaviour
     {
         Chunk currentChunk = new GameObject("Chunk").AddComponent<Chunk>();
         currentChunk.transform.parent = chunkHolder;
-
-        Vector3 newPos = new Vector3(xOffset, 0, 0);
         
-        currentChunk.transform.position = newPos;
-        
-        currentChunk.Initilize();
         currentChunk.gameObject.AddComponent<TilemapRenderer>();
         
         for (int x = 0; x < 16; x++)
         {
-            int trueBuildId = x + xOffset;
-            int height = Mathf.RoundToInt(seed * Mathf.PerlinNoise(trueBuildId / smoothness, seed));
+            int trueBuildX = x + xOffset;
+            int height = Mathf.RoundToInt(seed * Mathf.PerlinNoise(trueBuildX / smoothness, seed));
             int minStoneSpawnDistance = height - minStoneheight;
             int maxStoneSpawnDistance = height - maxStoneHeight;
             int totalStoneSpawnDistance = Random.Range(minStoneSpawnDistance, maxStoneSpawnDistance);
@@ -122,7 +118,6 @@ public class ChunkManager : MonoBehaviour
             } 
         }
         
-        currentChunk.UpdateChunk();
         return currentChunk;
     }
     
@@ -138,7 +133,6 @@ public class ChunkManager : MonoBehaviour
 
         newChunk.Blocks = chunkSRC.Blocks;
         
-        newChunk.Initilize();
         newChunk.gameObject.AddComponent<TilemapRenderer>();
 
         return newChunk;

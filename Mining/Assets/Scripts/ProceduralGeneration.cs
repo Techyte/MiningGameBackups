@@ -93,7 +93,6 @@ public class ProceduralGeneration : MonoBehaviour
         Vector2 newPos = new Vector2(currentChunkId * chunkWidth, 0);
         newChunk.transform.position = newPos;
         
-        newChunk.AddComponent<Chunk>().Initilize();
         newChunk.AddComponent<TilemapRenderer>();
 
         return newChunk;

@@ -9,17 +9,12 @@ public class Chunk : MonoBehaviour
     private Tilemap chunkMap;
     private TilemapCollider2D _collider2D;
 
-    public void Initilize()
+    public void UpdateChunk()
     {
         if (!_collider2D)
             _collider2D = GetComponent<TilemapCollider2D>();
         if (!chunkMap)
             chunkMap = GetComponent<Tilemap>();
-    }
-
-    public void UpdateChunk()
-    {
-        _collider2D = GetComponent<TilemapCollider2D>();
         
         chunkMap.ClearAllTiles();
         foreach(BlockRepresentation block in Blocks.Values)
