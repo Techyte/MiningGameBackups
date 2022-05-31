@@ -20,8 +20,8 @@ public class ProceduralGeneration : MonoBehaviour
     #region Start
     void Start()
     {
-        seed = Random.Range(-1000000, 1000000);
-        Generation();
+        //seed = Random.Range(-1000000, 1000000);
+        //Generation();
     }
     #endregion
 
@@ -71,8 +71,6 @@ public class ProceduralGeneration : MonoBehaviour
             currentChunkId++;
             
             Debug.Log(_chunkManager.currentWorldData);
-            
-            _chunkManager.currentWorldData.chunks.TryAdd((int)currentChunk.transform.position.x, currentChunk.GetComponent<Chunk>());
 
             currentChunk = CreatNewChunk(currentChunkId);
         }

@@ -29,7 +29,7 @@ public class ChunkManager : MonoBehaviour
 
     [SerializeField] private int currentPlayerChunk;
     [SerializeField] private Transform chunkHolder;
-    public WorldData currentWorldData = new WorldData();
+    public WorldData currentWorldData;
     [SerializeField] private int renderDistance;
     
     [SerializeField] int minStoneheight, maxStoneHeight;
@@ -38,8 +38,11 @@ public class ChunkManager : MonoBehaviour
     [Range(0, 100)]
     [SerializeField] float heightValue, smoothness;
 
+    [SerializeField] private float seed;
+
     private void Start()
     {
+        seed = Random.Range(-1000000, 1000000);
         UpdateChunks();
     }
 
@@ -50,22 +53,28 @@ public class ChunkManager : MonoBehaviour
 
     public void UpdateChunks()
     {
-        WorldData newWorldData = SaveAndLoad<WorldData>.LoadJson(Application.persistentDataPath  + "/world.json");
-
+        Chunk currentChunk = new GameObject("Chunk").AddComponent<Chunk>();
+        
         for (int i = currentPlayerChunk - (renderDistance/2); i < currentPlayerChunk + (renderDistance/2); i++)
         {
-            if (currentWorldData.chunks.TryGetValue(i, out Chunk chunk))
+            if (currentWorldData.chunks.TryGetValue(i, out ChunkData chunk))
             {
-                CreatNewChunk(chunk);
+                Debug.Log("Already Generated Chunk");
+                currentChunk = CreatNewChunk(chunk);
             }
             else
             {
-                GenerateNewChunk(i);
+                Debug.Log("Generating A New Chunk");
+                currentChunk = GenerateNewChunk(i);
+                currentWorldData.chunks.Add((int)currentChunk.transform.position.x/16, Chunk.ConvertToChunkData(currentChunk));
             }
+
+            currentChunk.transform.position = new Vector3(i * 16, 0, 0);
+            currentChunk.UpdateChunk();
         }
     }
 
-    public void GenerateNewChunk(int xOffset)
+    public Chunk GenerateNewChunk(int xOffset)
     {
         Chunk currentChunk = new GameObject("Chunk").AddComponent<Chunk>();
         currentChunk.transform.parent = chunkHolder;
@@ -80,7 +89,7 @@ public class ChunkManager : MonoBehaviour
         for (int x = 0; x < 16; x++)
         {
             int trueBuildId = x + xOffset;
-            int height = Mathf.RoundToInt(ProceduralGeneration.seed * Mathf.PerlinNoise(trueBuildId / smoothness, ProceduralGeneration.seed));
+            int height = Mathf.RoundToInt(seed * Mathf.PerlinNoise(trueBuildId / smoothness, seed));
             int minStoneSpawnDistance = height - minStoneheight;
             int maxStoneSpawnDistance = height - maxStoneHeight;
             int totalStoneSpawnDistance = Random.Range(minStoneSpawnDistance, maxStoneSpawnDistance);
@@ -112,19 +121,22 @@ public class ChunkManager : MonoBehaviour
                 }
             } 
         }
+        
+        currentChunk.UpdateChunk();
+        return currentChunk;
     }
     
-    void spawnObj(Block obj, int width, int height, Chunk holder)//What ever we spawn will be a child of our procedural generation gameObj
+    void spawnObj(Block obj, int width, int height, Chunk holder)
     {
         holder.AddBlockToChunk(obj, new Vector2(width, height));
     }
     
-    Chunk CreatNewChunk(Chunk chunkSRC)
+    Chunk CreatNewChunk(ChunkData chunkSRC)
     {
         Chunk newChunk = new GameObject("Chunk").AddComponent<Chunk>();
         newChunk.transform.parent = chunkHolder;
 
-        newChunk.transform.position = chunkSRC.transform.position;
+        newChunk.Blocks = chunkSRC.Blocks;
         
         newChunk.Initilize();
         newChunk.gameObject.AddComponent<TilemapRenderer>();
@@ -134,7 +146,7 @@ public class ChunkManager : MonoBehaviour
 }
 
 [System.Serializable]
-public struct WorldData
+public class WorldData
 {
-    public Dictionary<int, Chunk> chunks;
+    public Dictionary<int, ChunkData> chunks = new Dictionary<int, ChunkData>();
 }

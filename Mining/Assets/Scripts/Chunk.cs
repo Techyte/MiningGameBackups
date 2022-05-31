@@ -51,6 +51,12 @@ public class Chunk : MonoBehaviour
             }
         }
     }
+
+    public static ChunkData ConvertToChunkData(Chunk chunkToConvert)
+    {
+        ChunkData chunkData = new ChunkData(chunkToConvert.Blocks);
+        return chunkData;
+    }
 }
 
 public class BlockRepresentation
@@ -64,5 +70,15 @@ public class BlockRepresentation
         this.block = block;
         this.cords = cords;
         this.durability = durability;
+    }
+}
+
+public struct ChunkData
+{
+    public Dictionary<Vector2, BlockRepresentation> Blocks;
+
+    public ChunkData(Dictionary<Vector2, BlockRepresentation> blocks)
+    {
+        this.Blocks = blocks;
     }
 }
