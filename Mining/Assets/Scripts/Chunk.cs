@@ -24,13 +24,13 @@ public class Chunk : MonoBehaviour
             chunkMap.SetTile(SpawnPos, block.block.tile);
         }
         _collider2D.ProcessTilemapChanges();
+        
+        Debug.Log("Updated Chunks");
     }
 
     public void AddBlockToChunk(Block block, Vector2 cords)
     {
-        BlockRepresentation blockToAdd = new BlockRepresentation(block, cords, 5);
-        
-        Blocks.Add(cords, blockToAdd);
+        Blocks.Add(cords, new BlockRepresentation(block, cords, 5));
     }
 
     public void DamageBlock(Vector2 destroyCords, int damage)
@@ -68,12 +68,22 @@ public class BlockRepresentation
     }
 }
 
-public struct ChunkData
+public class ChunkData
 {
     public Dictionary<Vector2, BlockRepresentation> Blocks;
 
     public ChunkData(Dictionary<Vector2, BlockRepresentation> blocks)
     {
         this.Blocks = blocks;
+    }
+
+    public ChunkData()
+    {
+        Blocks = new Dictionary<Vector2, BlockRepresentation>();
+    }
+
+    public void AddBlock(Vector2 cords, BlockRepresentation blockRepresentation)
+    {
+        Blocks.Add(cords, blockRepresentation);
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -46,96 +47,94 @@ public class ChunkManager : MonoBehaviour
         UpdateChunks();
     }
 
-    public void SaveWorldData()
+    private void SaveData()
     {
-        SaveAndLoad<WorldData>.SaveJson(currentWorldData, Application.persistentDataPath  + "/world.json");
+        SaveAndLoad<WorldData>.SaveJson(currentWorldData, Application.persistentDataPath + "/world.json");
     }
 
-    public void UpdateChunks()
+    private void UpdateChunks()
     {
-        Chunk currentChunk = new GameObject("Chunk").AddComponent<Chunk>();
+        SaveAndLoad<WorldData>.LoadJson(Application.persistentDataPath + "/world.json");
+        
+        ChunkData currentChunkData = new ChunkData();
         
         for (int i = currentPlayerChunk - (renderDistance/2); i < currentPlayerChunk + (renderDistance/2); i++)
         {
-            if (currentWorldData.chunks.TryGetValue(i, out ChunkData chunk))
+            if (currentWorldData.chunks.TryGetValue(i, out ChunkData chunkData))
             {
-                Debug.Log("Already Generated Chunk");
-                currentChunk = CreatNewChunk(chunk);
+                Debug.Log("Chunk was already there so we can load from it");
+                currentChunkData = chunkData;
             }
             else
             {
-                Debug.Log("Generating A New Chunk");
-                currentChunk = GenerateNewChunk(i);
-                Debug.Log(currentChunk.transform.position.x / 16);
-                //currentWorldData.chunks.Add((int)currentChunk.transform.position.x/16, Chunk.ConvertToChunkData(currentChunk));
+                Debug.Log("Chunk was not there so we need to generate a new one");
+                currentChunkData = GenerateNewChunk(i);
+        
+                currentWorldData.chunks.Add(i, currentChunkData);
             }
 
-            currentChunk.transform.position = new Vector3(i * 16, 0, 0);
-            currentChunk.UpdateChunk();
+            CreateChunkFromData(currentChunkData, i);
         }
     }
 
-    public Chunk GenerateNewChunk(int xOffset)
+    private ChunkData GenerateNewChunk(int chunkId)
     {
-        Chunk currentChunk = new GameObject("Chunk").AddComponent<Chunk>();
-        currentChunk.transform.parent = chunkHolder;
-        
-        currentChunk.gameObject.AddComponent<TilemapRenderer>();
+        ChunkData chunkData = new ChunkData();
         
         for (int x = 0; x < 16; x++)
         {
-            int trueBuildX = x + xOffset;
-            int height = Mathf.RoundToInt(seed * Mathf.PerlinNoise(trueBuildX / smoothness, seed));
+            int trueBuildId = x +(chunkId * 16);
+            int height = Mathf.RoundToInt(heightValue * Mathf.PerlinNoise(trueBuildId / smoothness, seed));
             int minStoneSpawnDistance = height - minStoneheight;
             int maxStoneSpawnDistance = height - maxStoneHeight;
             int totalStoneSpawnDistance = Random.Range(minStoneSpawnDistance, maxStoneSpawnDistance);
 
             //Perlin noise.
-            for (int y = 0; y < height; y++)//This will help spawn a tile on the y axis
+            for (int y = 0; y < height; y++)
             {
                 if (y < totalStoneSpawnDistance)
                 {
-                    spawnObj(stoneBlock, x, y, currentChunk);
+                    chunkData.AddBlock(new Vector2(x, y), new BlockRepresentation(stoneBlock, new Vector2(x, height), 5));
+                    Debug.Log("Added a stone block");
                 }
                 else
                 {
-                    spawnObj(dirtBlock, x, y, currentChunk);
+                    chunkData.AddBlock(new Vector2(x, y), new BlockRepresentation(dirtBlock, new Vector2(x, height), 5));
+                    Debug.Log("Added a dirt block");
                 }
             }
 
             if (totalStoneSpawnDistance == height)
             {
-                spawnObj(stoneBlock, x, height, currentChunk);
+                chunkData.AddBlock(new Vector2(x, height), new BlockRepresentation(stoneBlock, new Vector2(x, height), 5));
             }
             else
             {
-                spawnObj(grassBlock, x, height, currentChunk);
+                chunkData.AddBlock(new Vector2(x, height), new BlockRepresentation(grassBlock, new Vector2(x, height), 5));
                 int randomInt = Random.Range(0, 25);
                 if (randomInt == 1)
                 {
                     // spawnObj(tree, x, height + 1, currentChunk);
                 }
-            } 
+            }   
         }
         
-        return currentChunk;
+        return chunkData;
     }
-    
-    void spawnObj(Block obj, int width, int height, Chunk holder)
+
+    private void CreateChunkFromData(ChunkData sourceData, int x)
     {
-        holder.AddBlockToChunk(obj, new Vector2(width, height));
-    }
-    
-    Chunk CreatNewChunk(ChunkData chunkSRC)
-    {
-        Chunk newChunk = new GameObject("Chunk").AddComponent<Chunk>();
+        GameObject newChunk = new GameObject("Chunk");
         newChunk.transform.parent = chunkHolder;
 
-        newChunk.Blocks = chunkSRC.Blocks;
-        
-        newChunk.gameObject.AddComponent<TilemapRenderer>();
+        newChunk.AddComponent<Chunk>();
+        newChunk.AddComponent<TilemapRenderer>();
 
-        return newChunk;
+        newChunk.GetComponent<Chunk>().Blocks = sourceData.Blocks;
+
+        Vector3 newPos = new Vector3(x * 16, 0, 0);
+        newChunk.transform.position = newPos;
+        newChunk.GetComponent<Chunk>().UpdateChunk();
     }
 }
 
