@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Random = UnityEngine.Random;
 
 public class ChunkManager : MonoBehaviour
 {
@@ -40,11 +42,22 @@ public class ChunkManager : MonoBehaviour
     [SerializeField] float heightValue, smoothness;
 
     [SerializeField] private float seed;
+    private int lastFrameChunk;
 
     private void Start()
     {
         seed = Random.Range(-1000000, 1000000);
         UpdateChunks();
+    }
+
+    private void Update()
+    {
+        if (currentPlayerChunk != lastFrameChunk)
+        {
+            Debug.Log("Player moved between chunks");
+        }
+        
+        lastFrameChunk = currentPlayerChunk;
     }
 
     private void SaveData()
@@ -67,7 +80,6 @@ public class ChunkManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("Chunk was not there so we need to generate a new one");
                 currentChunkData = GenerateNewChunk(i);
         
                 currentWorldData.chunks.Add(i, currentChunkData);
@@ -85,25 +97,19 @@ public class ChunkManager : MonoBehaviour
         {
             int trueBuildId = x +(chunkId * 16);
             int height = Mathf.RoundToInt(heightValue * Mathf.PerlinNoise(trueBuildId / smoothness, seed));
-            int minStoneSpawnDistance = height - minStoneheight;
-            int maxStoneSpawnDistance = height - maxStoneHeight;
-            int totalStoneSpawnDistance = Random.Range(minStoneSpawnDistance, maxStoneSpawnDistance);
+            int totalStoneSpawnDistance = Random.Range(height - minStoneheight, height - maxStoneHeight);
 
-            //Perlin noise.
             for (int y = 0; y < height; y++)
-            {
+            { 
                 if (y < totalStoneSpawnDistance)
+                { 
+                    chunkData.AddBlock(new Vector2(x, y), new BlockRepresentation(stoneBlock, new Vector2(x, y), 5));
+                }else
                 {
-                    chunkData.AddBlock(new Vector2(x, y), new BlockRepresentation(stoneBlock, new Vector2(x, height), 5));
-                    Debug.Log("Added a stone block");
-                }
-                else
-                {
-                    chunkData.AddBlock(new Vector2(x, y), new BlockRepresentation(dirtBlock, new Vector2(x, height), 5));
-                    Debug.Log("Added a dirt block");
+                    chunkData.AddBlock(new Vector2(x, y), new BlockRepresentation(dirtBlock, new Vector2(x, y), 5));
                 }
             }
-
+            
             if (totalStoneSpawnDistance == height)
             {
                 chunkData.AddBlock(new Vector2(x, height), new BlockRepresentation(stoneBlock, new Vector2(x, height), 5));
@@ -111,12 +117,7 @@ public class ChunkManager : MonoBehaviour
             else
             {
                 chunkData.AddBlock(new Vector2(x, height), new BlockRepresentation(grassBlock, new Vector2(x, height), 5));
-                int randomInt = Random.Range(0, 25);
-                if (randomInt == 1)
-                {
-                    // spawnObj(tree, x, height + 1, currentChunk);
-                }
-            }   
+            }
         }
         
         return chunkData;

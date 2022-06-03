@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -8,14 +9,26 @@ public class Chunk : MonoBehaviour
     public Dictionary<Vector2, BlockRepresentation> Blocks = new Dictionary<Vector2, BlockRepresentation>();
     private Tilemap chunkMap;
     private TilemapCollider2D _collider2D;
+    private Transform player;
 
-    public void UpdateChunk()
+    private void Start()
     {
+        Debug.Log("Chunk spawned");
         if (!_collider2D)
             _collider2D = GetComponent<TilemapCollider2D>();
         if (!chunkMap)
             chunkMap = GetComponent<Tilemap>();
+        if (!player)
+            player = transform.Find("Player");
+    }
+
+    private void Update()
+    {
         
+    }
+
+    public void UpdateChunk()
+    {   
         chunkMap.ClearAllTiles();
         foreach(BlockRepresentation block in Blocks.Values)
         {
@@ -24,8 +37,6 @@ public class Chunk : MonoBehaviour
             chunkMap.SetTile(SpawnPos, block.block.tile);
         }
         _collider2D.ProcessTilemapChanges();
-        
-        Debug.Log("Updated Chunks");
     }
 
     public void AddBlockToChunk(Block block, Vector2 cords)
