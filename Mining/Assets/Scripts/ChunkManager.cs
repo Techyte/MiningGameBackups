@@ -30,7 +30,7 @@ public class ChunkManager : MonoBehaviour
     }
     #endregion
 
-    [SerializeField] private int currentPlayerChunk;
+    public int currentPlayerChunk;
     [SerializeField] private Transform chunkHolder;
     public WorldData currentWorldData;
     [SerializeField] private int renderDistance;
@@ -41,12 +41,12 @@ public class ChunkManager : MonoBehaviour
     [Range(0, 100)]
     [SerializeField] float heightValue, smoothness;
 
-    [SerializeField] private float seed;
     private int lastFrameChunk;
+
+    private List<GameObject> currentylyLoadedChunks = new List<GameObject>();
 
     private void Start()
     {
-        seed = Random.Range(-1000000, 1000000);
         UpdateChunks();
     }
 
@@ -54,7 +54,7 @@ public class ChunkManager : MonoBehaviour
     {
         if (currentPlayerChunk != lastFrameChunk)
         {
-            Debug.Log("Player moved between chunks");
+            UpdateChunks();
         }
         
         lastFrameChunk = currentPlayerChunk;
@@ -68,14 +68,23 @@ public class ChunkManager : MonoBehaviour
     private void UpdateChunks()
     {
         SaveAndLoad<WorldData>.LoadJson(Application.persistentDataPath + "/world.json");
+
+        if (currentWorldData.seed == 0)
+        {
+            currentWorldData.seed = Random.Range(-1000000, 1000000);
+        }
         
         ChunkData currentChunkData = new ChunkData();
+
+        for (int i = 0; i < currentylyLoadedChunks.Count; i++)
+        {
+            Destroy(currentylyLoadedChunks[i]);
+        }
         
         for (int i = currentPlayerChunk - (renderDistance/2); i < currentPlayerChunk + (renderDistance/2); i++)
         {
             if (currentWorldData.chunks.TryGetValue(i, out ChunkData chunkData))
             {
-                Debug.Log("Chunk was already there so we can load from it");
                 currentChunkData = chunkData;
             }
             else
@@ -85,8 +94,11 @@ public class ChunkManager : MonoBehaviour
                 currentWorldData.chunks.Add(i, currentChunkData);
             }
 
-            CreateChunkFromData(currentChunkData, i);
+            GameObject chunk = CreateChunkFromData(currentChunkData, i);
+            currentylyLoadedChunks.Add(chunk);
         }
+        
+        SaveData();
     }
 
     private ChunkData GenerateNewChunk(int chunkId)
@@ -96,7 +108,7 @@ public class ChunkManager : MonoBehaviour
         for (int x = 0; x < 16; x++)
         {
             int trueBuildId = x +(chunkId * 16);
-            int height = Mathf.RoundToInt(heightValue * Mathf.PerlinNoise(trueBuildId / smoothness, seed));
+            int height = Mathf.RoundToInt(heightValue * Mathf.PerlinNoise(trueBuildId / smoothness, currentWorldData.seed));
             int totalStoneSpawnDistance = Random.Range(height - minStoneheight, height - maxStoneHeight);
 
             for (int y = 0; y < height; y++)
@@ -123,7 +135,7 @@ public class ChunkManager : MonoBehaviour
         return chunkData;
     }
 
-    private void CreateChunkFromData(ChunkData sourceData, int x)
+    private GameObject CreateChunkFromData(ChunkData sourceData, int x)
     {
         GameObject newChunk = new GameObject("Chunk");
         newChunk.transform.parent = chunkHolder;
@@ -136,11 +148,13 @@ public class ChunkManager : MonoBehaviour
         Vector3 newPos = new Vector3(x * 16, 0, 0);
         newChunk.transform.position = newPos;
         newChunk.GetComponent<Chunk>().UpdateChunk();
+        return newChunk;
     }
 }
 
-[System.Serializable]
+[Serializable]
 public class WorldData
 {
     public Dictionary<int, ChunkData> chunks = new Dictionary<int, ChunkData>();
+    public int seed;
 }

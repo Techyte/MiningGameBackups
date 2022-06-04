@@ -18,9 +18,11 @@ public class BlockManager : MonoBehaviour
 
             if (colliders.Length > 0)
             {
+                Debug.Log("Found a chunk");
                 blockMousePos.transform.parent = colliders[0].transform;
                 if (colliders[0].GetComponent<Tilemap>())
                 {
+                    Debug.Log("Is a chunk");
                     Vector2Int blockPos = new Vector2Int();
                     blockPos.x = Mathf.FloorToInt(blockMousePos.transform.localPosition.x);
                     blockPos.y = Mathf.FloorToInt(blockMousePos.transform.localPosition.y);
@@ -32,6 +34,7 @@ public class BlockManager : MonoBehaviour
                     RaycastHit2D hit = Physics2D.Raycast(player.position, direction, reach);
                     if (hit)
                     {
+                        Debug.Log("can hit the position");
                         Vector2Int flooredMousePos = Vector2Int.FloorToInt(blockMousePos.transform.position);
                         Vector2Int floordedHitPos = Vector2Int.FloorToInt(hit.point);
                         floordedHitPos.y -= 1;
@@ -50,6 +53,8 @@ public class BlockManager : MonoBehaviour
                     }
                 }
             }
+
+            blockMousePos.parent = transform;
         }
     }
 }

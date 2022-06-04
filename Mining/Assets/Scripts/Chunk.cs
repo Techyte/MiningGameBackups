@@ -11,24 +11,25 @@ public class Chunk : MonoBehaviour
     private TilemapCollider2D _collider2D;
     private Transform player;
 
-    private void Start()
+    private void Update()
     {
-        Debug.Log("Chunk spawned");
+        
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        ChunkManager.Singleton.currentPlayerChunk = Mathf.RoundToInt(transform.position.x / 16);
+    }
+
+    public void UpdateChunk()
+    {   
         if (!_collider2D)
             _collider2D = GetComponent<TilemapCollider2D>();
         if (!chunkMap)
             chunkMap = GetComponent<Tilemap>();
         if (!player)
             player = transform.Find("Player");
-    }
-
-    private void Update()
-    {
         
-    }
-
-    public void UpdateChunk()
-    {   
         chunkMap.ClearAllTiles();
         foreach(BlockRepresentation block in Blocks.Values)
         {
