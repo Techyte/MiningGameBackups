@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
+using Techyte.General;
 
 public class ChunkManager : MonoBehaviour
 {
@@ -47,17 +49,30 @@ public class ChunkManager : MonoBehaviour
 
     private void Start()
     {
+        if(File.Exists(Application.persistentDataPath + "/world.json"))
+            SaveData();
         UpdateChunks();
     }
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            SaveData();
+            SceneManager.LoadScene(0);
+        }
+        
         if (currentPlayerChunk != lastFrameChunk)
         {
             UpdateChunks();
         }
         
         lastFrameChunk = currentPlayerChunk;
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveData();
     }
 
     private void SaveData()
@@ -67,12 +82,7 @@ public class ChunkManager : MonoBehaviour
 
     private void UpdateChunks()
     {
-        SaveAndLoad<WorldData>.LoadJson(Application.persistentDataPath + "/world.json");
-
-        if (currentWorldData.seed == 0)
-        {
-            currentWorldData.seed = Random.Range(-1000000, 1000000);
-        }
+        currentWorldData = SaveAndLoad<WorldData>.LoadJson(Application.persistentDataPath + "/world.json");
         
         ChunkData currentChunkData = new ChunkData();
 
@@ -86,6 +96,7 @@ public class ChunkManager : MonoBehaviour
             if (currentWorldData.chunks.TryGetValue(i, out ChunkData chunkData))
             {
                 currentChunkData = chunkData;
+                Debug.Log("Chunk was already there so we are just loading it");
             }
             else
             {
@@ -153,8 +164,31 @@ public class ChunkManager : MonoBehaviour
 }
 
 [Serializable]
-public class WorldData
+public class WorldData : ISerializationCallbackReceiver
 {
     public Dictionary<int, ChunkData> chunks = new Dictionary<int, ChunkData>();
     public int seed;
+
+    public List<int> _keys = new List<int>();
+    public List<ChunkData> _values = new List<ChunkData>();
+
+    public void OnBeforeSerialize()
+    {
+        _keys.Clear();
+        _values.Clear();
+
+        foreach (var kvp in chunks)
+        {
+            _keys.Add(kvp.Key);
+            _values.Add(kvp.Value);
+        }
+    }
+
+    public void OnAfterDeserialize()
+    {
+        chunks = new Dictionary<int, ChunkData>();
+
+        for (int i = 0; i != Math.Min(_keys.Count, _values.Count); i++)
+            chunks.Add(_keys[i], _values[i]);
+    }
 }

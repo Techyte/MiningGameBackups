@@ -1,15 +1,18 @@
 using System.IO;
 using UnityEngine;
 
-public class SaveAndLoad<Type>
+namespace Techyte.General
 {
-    public static void SaveJson(Type data, string path)
+    public class SaveAndLoad<Type>
     {
-        File.WriteAllText(path, JsonUtility.ToJson(data, true));
-    }
+        public static void SaveJson(Type data, string path)
+        {
+            File.WriteAllText(path, JsonUtility.ToJson(data, true));
+        }
 
-    public static Type LoadJson(string path)
-    {
-        return JsonUtility.FromJson<Type>(File.ReadAllText(path));
-    }
+        public static Type LoadJson(string path)
+        {
+            return JsonUtility.FromJson<Type>(File.ReadAllText(path));
+        }
+    }   
 }
