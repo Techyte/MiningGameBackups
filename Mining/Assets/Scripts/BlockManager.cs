@@ -7,6 +7,8 @@ public class BlockManager : MonoBehaviour
     [SerializeField] private Transform blockMousePos;
     [SerializeField] private Transform player;
     [SerializeField] private float reach = 10f;
+    [SerializeField] private LayerMask layerMask;
+    [SerializeField] private Block grass;
 
     private void Update()
     {
@@ -40,10 +42,8 @@ public class BlockManager : MonoBehaviour
                         {
                             Tilemap tilemap = colliders[0].GetComponent<Tilemap>();
                             Chunk chunk = colliders[0].GetComponent<Chunk>();
-                            Debug.Log("Hit the correct block");
                             if (tilemap.GetTile((Vector3Int)blockPos))
                             {
-                                Debug.Log(tilemap.GetTile((Vector3Int)blockPos));
                                 chunk.DamageBlock(blockPos, 1);
                             }
                         }
@@ -52,6 +52,22 @@ public class BlockManager : MonoBehaviour
             }
 
             blockMousePos.parent = transform;
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            Vector2 direction = (blockMousePos.position - player.position).normalized;
+            RaycastHit2D hit = Physics2D.Raycast(player.position, direction, reach, layerMask);
+            if (hit)
+            {
+                Chunk buildingChunk = hit.transform.gameObject.GetComponent<Chunk>();
+
+                Vector2 buildPos = Vector2Int.RoundToInt(hit.point);
+                buildPos += hit.normal;
+                
+                buildingChunk.AddBlockToChunk(grass, buildPos);
+                buildingChunk.UpdateChunk();
+            }
         }
     }
 }

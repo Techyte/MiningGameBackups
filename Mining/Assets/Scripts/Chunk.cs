@@ -28,9 +28,12 @@ public class Chunk : MonoBehaviour
         chunkMap.ClearAllTiles();
         foreach(BlockRepresentation block in Blocks.Values)
         {
-            Vector3Int SpawnPos = Vector3Int.RoundToInt(block.cords);
+            if (Blocks.TryGetValue(block.cords, out BlockRepresentation blockRepresentation))
+            {
+                Vector3Int SpawnPos = Vector3Int.RoundToInt(blockRepresentation.cords);
 
-            chunkMap.SetTile(SpawnPos, block.block.tile);
+                chunkMap.SetTile(SpawnPos, blockRepresentation.block.tile);   
+            }
         }
         _collider2D.ProcessTilemapChanges();
     }
@@ -45,10 +48,8 @@ public class Chunk : MonoBehaviour
         if (Blocks.TryGetValue(destroyCords, out BlockRepresentation block))
         {
             block.durability--;
-            Debug.Log("Damaging block");
             if(block.durability <= 0)
             {
-                Debug.Log("Block Broke");
                 Blocks.Remove(destroyCords);
                 UpdateChunk();
             }
@@ -62,6 +63,7 @@ public class Chunk : MonoBehaviour
     }
 }
 
+[Serializable]
 public class BlockRepresentation
 {
     public Vector2 cords;
@@ -76,7 +78,8 @@ public class BlockRepresentation
     }
 }
 
-public class ChunkData
+[Serializable]
+public class ChunkData : ISerializationCallbackReceiver
 {
     public Dictionary<Vector2, BlockRepresentation> Blocks;
 
@@ -93,5 +96,28 @@ public class ChunkData
     public void AddBlock(Vector2 cords, BlockRepresentation blockRepresentation)
     {
         Blocks.Add(cords, blockRepresentation);
+    }
+
+    public List<Vector2> _keys = new List<Vector2>();
+    public List<BlockRepresentation> _values = new List<BlockRepresentation>();
+
+    public void OnBeforeSerialize()
+    {
+        _keys.Clear();
+        _values.Clear();
+
+        foreach (var kvp in Blocks)
+        {
+            _values.Add(kvp.Value);
+            _keys.Add(kvp.Key);
+        }
+    }
+
+    public void OnAfterDeserialize()
+    {
+        Blocks = new Dictionary<Vector2, BlockRepresentation>();
+
+        for (int i = 0; i != Math.Min(_keys.Count, _values.Count); i++)
+            Blocks.Add(_keys[i], _values[i]);
     }
 }

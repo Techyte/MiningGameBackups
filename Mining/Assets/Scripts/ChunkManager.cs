@@ -4,8 +4,10 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
-using Random = UnityEngine.Random;
 using Techyte.General;
+using System.Diagnostics;
+using Random = UnityEngine.Random;
+using Debug = UnityEngine.Debug;
 
 public class ChunkManager : MonoBehaviour
 {
@@ -49,7 +51,7 @@ public class ChunkManager : MonoBehaviour
 
     private void Start()
     {
-        if(File.Exists(Application.persistentDataPath + "/world.json"))
+        if(!File.Exists(Application.persistentDataPath + "/world.json"))
             SaveData();
         UpdateChunks();
     }
@@ -64,6 +66,7 @@ public class ChunkManager : MonoBehaviour
         
         if (currentPlayerChunk != lastFrameChunk)
         {
+            Debug.Log("Player moved between chunks");
             UpdateChunks();
         }
         
@@ -82,7 +85,15 @@ public class ChunkManager : MonoBehaviour
 
     private void UpdateChunks()
     {
+        Stopwatch watch = new Stopwatch();
+        watch.Start();
+        
         currentWorldData = SaveAndLoad<WorldData>.LoadJson(Application.persistentDataPath + "/world.json");
+        
+        if (currentWorldData.seed == 0)
+        {
+            currentWorldData.seed = Random.Range(-100000, 100000);
+        }
         
         ChunkData currentChunkData = new ChunkData();
 
@@ -96,7 +107,6 @@ public class ChunkManager : MonoBehaviour
             if (currentWorldData.chunks.TryGetValue(i, out ChunkData chunkData))
             {
                 currentChunkData = chunkData;
-                Debug.Log("Chunk was already there so we are just loading it");
             }
             else
             {
@@ -106,10 +116,14 @@ public class ChunkManager : MonoBehaviour
             }
 
             GameObject chunk = CreateChunkFromData(currentChunkData, i);
+            chunk.layer = 17;
             currentylyLoadedChunks.Add(chunk);
         }
         
         SaveData();
+        
+        watch.Stop();
+        Debug.Log("Update took: " + watch.ElapsedMilliseconds + " ms");
     }
 
     private ChunkData GenerateNewChunk(int chunkId)
@@ -179,8 +193,8 @@ public class WorldData : ISerializationCallbackReceiver
 
         foreach (var kvp in chunks)
         {
-            _keys.Add(kvp.Key);
             _values.Add(kvp.Value);
+            _keys.Add(kvp.Key);
         }
     }
 
