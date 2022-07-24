@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 using Techyte.General;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Random = UnityEngine.Random;
 using Debug = UnityEngine.Debug;
 
@@ -34,13 +35,14 @@ public class ChunkManager : MonoBehaviour
     }
     #endregion
 
-    public int currentPlayerChunk;
+    [SerializeField] public int currentPlayerChunk;
     [SerializeField] private Transform chunkHolder;
     public WorldData currentWorldData;
     [SerializeField] private int renderDistance;
     
     [SerializeField] int minStoneheight, maxStoneHeight;
     [SerializeField] private Block dirtBlock, grassBlock, stoneBlock;
+    [SerializeField] private Transform player;
 
     [Range(0, 100)]
     [SerializeField] float heightValue, smoothness;
@@ -52,7 +54,9 @@ public class ChunkManager : MonoBehaviour
     private void Start()
     {
         if(!File.Exists(Application.persistentDataPath + "/world.json"))
-            SaveData();
+            SaveData(Application.persistentDataPath + "/world.json");
+        currentWorldData = SaveAndLoad<WorldData>.LoadJson(Application.persistentDataPath + "/world.json");
+        //UpdateData(Application.persistentDataPath + "/world.json");
         UpdateChunks();
     }
 
@@ -60,13 +64,16 @@ public class ChunkManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.N))
         {
-            SaveData();
+            SaveData(Application.persistentDataPath + "/world.json");
             SceneManager.LoadScene(0);
         }
+
+        currentPlayerChunk = Mathf.FloorToInt(player.position.x / 16);
         
         if (currentPlayerChunk != lastFrameChunk)
         {
             Debug.Log("Player moved between chunks");
+            //UpdateData(Application.persistentDataPath + "/world.json");
             UpdateChunks();
         }
         
@@ -75,20 +82,33 @@ public class ChunkManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        SaveData();
+        SaveData(Application.persistentDataPath + "/world.json");
     }
 
-    private void SaveData()
+    private void SaveData(string path)
     {
-        SaveAndLoad<WorldData>.SaveJson(currentWorldData, Application.persistentDataPath + "/world.json");
+        SaveAndLoad<WorldData>.SaveJson(currentWorldData, path);
     }
 
-    private void UpdateChunks()
+    private async void UpdateData(string path)
     {
         Stopwatch watch = new Stopwatch();
         watch.Start();
-        
-        currentWorldData = SaveAndLoad<WorldData>.LoadJson(Application.persistentDataPath + "/world.json");
+        await Task.Run(() =>
+        {
+            currentWorldData = SaveAndLoad<WorldData>.LoadJson(path);
+            UpdateChunks();
+            SaveData(path);
+        });
+        watch.Stop();
+        Debug.Log(watch.ElapsedMilliseconds + "ms");
+    }
+
+    private void UpdateChunks()
+    {   
+        Stopwatch watch = new Stopwatch();
+        watch.Start();
+        //currentWorldData = SaveAndLoad<WorldData>.LoadJson(Application.persistentDataPath + "/world.json");
         
         if (currentWorldData.seed == 0)
         {
@@ -119,11 +139,9 @@ public class ChunkManager : MonoBehaviour
             chunk.layer = 17;
             currentylyLoadedChunks.Add(chunk);
         }
-        
-        SaveData();
-        
+
         watch.Stop();
-        Debug.Log("Update took: " + watch.ElapsedMilliseconds + " ms");
+        Debug.Log(watch.ElapsedMilliseconds + "ms");
     }
 
     private ChunkData GenerateNewChunk(int chunkId)

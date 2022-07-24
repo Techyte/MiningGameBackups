@@ -11,11 +11,6 @@ public class Chunk : MonoBehaviour
     private TilemapCollider2D _collider2D;
     private Transform player;
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        ChunkManager.Singleton.currentPlayerChunk = Mathf.RoundToInt(transform.position.x / 16);
-    }
-
     public void UpdateChunk()
     {   
         if (!_collider2D)
@@ -32,7 +27,7 @@ public class Chunk : MonoBehaviour
             {
                 Vector3Int SpawnPos = Vector3Int.RoundToInt(blockRepresentation.cords);
 
-                chunkMap.SetTile(SpawnPos, blockRepresentation.block.tile);   
+                chunkMap.SetTile(SpawnPos, blockRepresentation.block.tile);
             }
         }
         _collider2D.ProcessTilemapChanges();

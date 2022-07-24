@@ -16,37 +16,36 @@ public class BlockManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(blockMousePos.position, .1f);
+            Vector2Int blockPos = Vector2Int.FloorToInt(blockMousePos.transform.localPosition);
+            blockPos += Vector2Int.right;
+            blockPos += Vector2Int.up;
 
-            if (colliders.Length > 0)
+            Vector3 vector2BlockPos = new Vector3(blockPos.x, blockPos.y, 0);
+
+            Vector2 direction = (vector2BlockPos - player.position).normalized;
+
+            RaycastHit2D hit = Physics2D.Raycast(player.position, direction, reach);
+            Debug.DrawRay(player.position, direction, Color.red, 5);
+            if (hit)
             {
-                blockMousePos.transform.parent = colliders[0].transform;
-                if (colliders[0].GetComponent<Tilemap>())
+                Vector2Int flooredMousePos = Vector2Int.FloorToInt(blockMousePos.transform.position);
+                Vector2Int floordedHitPos = Vector2Int.FloorToInt(hit.point);
+
+                Debug.Log(flooredMousePos);
+                Debug.Log(floordedHitPos);
+
+                switch (hit.normal)
                 {
-                    Vector2Int blockPos = new Vector2Int();
-                    blockPos.x = Mathf.FloorToInt(blockMousePos.transform.localPosition.x);
-                    blockPos.y = Mathf.FloorToInt(blockMousePos.transform.localPosition.y);
+                    
+                }
 
-                    Vector3 vector2BlockPos = new Vector3(blockPos.x, blockPos.y, 0);
-
-                    Vector2 direction = (vector2BlockPos - player.position).normalized;
-
-                    RaycastHit2D hit = Physics2D.Raycast(player.position, direction, reach);
-                    if (hit)
+                if (flooredMousePos == floordedHitPos)
+                {
+                    Tilemap tilemap = hit.transform.GetComponent<Tilemap>();
+                    Chunk chunk = hit.transform.GetComponent<Chunk>();
+                    if (tilemap.GetTile((Vector3Int)blockPos))
                     {
-                        Vector2Int flooredMousePos = Vector2Int.RoundToInt(blockMousePos.transform.position);
-                        Vector2Int floordedHitPos = Vector2Int.RoundToInt(hit.point);
-                        floordedHitPos.y -= 1;
-
-                        if (flooredMousePos == floordedHitPos)
-                        {
-                            Tilemap tilemap = colliders[0].GetComponent<Tilemap>();
-                            Chunk chunk = colliders[0].GetComponent<Chunk>();
-                            if (tilemap.GetTile((Vector3Int)blockPos))
-                            {
-                                chunk.DamageBlock(blockPos, 1);
-                            }
-                        }
+                        chunk.DamageBlock(blockPos, 1);
                     }
                 }
             }

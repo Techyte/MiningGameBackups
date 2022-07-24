@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -14,10 +16,10 @@ public class Player : MonoBehaviour
     public static Vector3 playerPos;
     public LayerMask block;
     public static float realReach;
-    public Vector3 spawnFallback;
     [SerializeField] public Transform playerMiddle;
     [SerializeField] public static GameObject mouseOver;
     [SerializeField] float maxSpeed = 3.4f, jumpHeight = 6.5f, gravityScale = 1.5f;
+    [SerializeField] private Transform playerFeet;
 
     bool facingRight = true;
     float moveDirection = 0;
@@ -34,7 +36,6 @@ public class Player : MonoBehaviour
     void Start()
     {
         player = gameObject;
-        SpawnTest();
         playerPos = gameObject.transform.position;
         t = transform;
         r2d = GetComponent<Rigidbody2D>();
@@ -119,22 +120,6 @@ public class Player : MonoBehaviour
         // Simple debug
         Debug.DrawLine(groundCheckPos, groundCheckPos - new Vector3(0, colliderRadius, 0), isGrounded ? Color.green : Color.red);
         Debug.DrawLine(groundCheckPos, groundCheckPos - new Vector3(colliderRadius, 0, 0), isGrounded ? Color.green : Color.red);
-    }
-    #endregion
-
-    #region Spawn test function
-    void SpawnTest()
-    {
-        //Sending a raycast to see if the player spawned in a block
-        RaycastHit2D ray = Physics2D.Raycast(playerMiddle.transform.position, Vector2.down, 5f);
-
-        Debug.DrawRay(playerMiddle.transform.position, Vector2.down, Color.red, 5f);
-        //If they spawned in a block then teliport them up by 1 untill they are not in a block
-        if (ray)
-        {
-            gameObject.transform.position = gameObject.transform.position += spawnFallback;
-            SpawnTest();
-        }
     }
     #endregion
 }
