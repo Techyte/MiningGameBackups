@@ -17,14 +17,12 @@ public class BlockManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Vector2Int blockPos = Vector2Int.FloorToInt(blockMousePos.transform.localPosition);
-            blockPos += Vector2Int.right;
-            blockPos += Vector2Int.up;
 
             Vector3 vector2BlockPos = new Vector3(blockPos.x, blockPos.y, 0);
 
             Vector2 direction = (vector2BlockPos - player.position).normalized;
 
-            RaycastHit2D hit = Physics2D.Raycast(player.position, direction, reach);
+            RaycastHit2D hit = Physics2D.Raycast(player.position, direction, reach, layerMask);
             Debug.DrawRay(player.position, direction, Color.red, 5);
             if (hit)
             {
@@ -34,19 +32,11 @@ public class BlockManager : MonoBehaviour
                 Debug.Log(flooredMousePos);
                 Debug.Log(floordedHitPos);
 
-                switch (hit.normal)
+                Tilemap tilemap = hit.transform.GetComponent<Tilemap>();
+                Chunk chunk = hit.transform.GetComponent<Chunk>();
+                if (tilemap.GetTile((Vector3Int)blockPos))
                 {
-                    
-                }
-
-                if (flooredMousePos == floordedHitPos)
-                {
-                    Tilemap tilemap = hit.transform.GetComponent<Tilemap>();
-                    Chunk chunk = hit.transform.GetComponent<Chunk>();
-                    if (tilemap.GetTile((Vector3Int)blockPos))
-                    {
-                        chunk.DamageBlock(blockPos, 1);
-                    }
+                    chunk.DamageBlock(blockPos, 1);
                 }
             }
 

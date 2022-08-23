@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -10,24 +8,14 @@ public class Player : MonoBehaviour
     #region Variables
     //Variables
     // Move player in 2D space
-    public static GameObject player;
-    public Animator anim;
-    public static bool isMining = true;
-    public static Vector3 playerPos;
-    public LayerMask block;
-    public static float realReach;
-    [SerializeField] public Transform playerMiddle;
-    [SerializeField] public static GameObject mouseOver;
     [SerializeField] float maxSpeed = 3.4f, jumpHeight = 6.5f, gravityScale = 1.5f;
-    [SerializeField] private Transform playerFeet;
 
     bool facingRight = true;
-    float moveDirection = 0;
-    bool isGrounded = false;
+    float moveDirection;
+    bool isGrounded;
     Rigidbody2D r2d;
     CapsuleCollider2D mainCollider;
     Transform t;
-    public Transform movementChecker;
 
     #endregion
 
@@ -35,8 +23,6 @@ public class Player : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        player = gameObject;
-        playerPos = gameObject.transform.position;
         t = transform;
         r2d = GetComponent<Rigidbody2D>();
         mainCollider = GetComponent<CapsuleCollider2D>();
