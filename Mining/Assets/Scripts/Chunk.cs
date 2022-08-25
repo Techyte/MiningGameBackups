@@ -35,7 +35,7 @@ public class Chunk : MonoBehaviour
 
     public void AddBlockToChunk(Block block, Vector2 cords)
     {
-        Blocks.Add(cords, new BlockRepresentation(block, cords, 5));
+        Blocks.Add(cords, new BlockRepresentation(block, cords, (int)block.durability));
     }
 
     public void DamageBlock(Vector2 destroyCords, int damage)

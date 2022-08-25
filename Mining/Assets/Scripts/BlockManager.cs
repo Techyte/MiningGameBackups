@@ -15,36 +15,68 @@ public class BlockManager : MonoBehaviour
         blockMousePos.position = playerCam.ScreenToWorldPoint(Input.mousePosition);
 
         if (Input.GetMouseButtonDown(0))
-        {
+        {   
             Vector2Int blockPos = Vector2Int.FloorToInt(blockMousePos.transform.localPosition);
 
-            Vector3 vector2BlockPos = new Vector3(blockPos.x, blockPos.y, 0);
+            Vector3 vector3BlockPos = new Vector3(blockPos.x, blockPos.y, 0);
 
-            Vector2 direction = (vector2BlockPos - player.position).normalized;
+            Vector2 direction = (vector3BlockPos - player.position).normalized;
 
             RaycastHit2D hit = Physics2D.Raycast(player.position, direction, reach, layerMask);
-            Debug.DrawRay(player.position, direction, Color.red, 5);
+
             if (hit)
             {
-                Vector2Int flooredMousePos = Vector2Int.FloorToInt(blockMousePos.transform.position);
-                Vector2Int floordedHitPos = Vector2Int.FloorToInt(hit.point);
-
-                Debug.Log(flooredMousePos);
-                Debug.Log(floordedHitPos);
-
                 Tilemap tilemap = hit.transform.GetComponent<Tilemap>();
                 Chunk chunk = hit.transform.GetComponent<Chunk>();
+                if (chunk && tilemap)
+                {
+                    blockMousePos.parent = hit.transform;
+                    blockPos = Vector2Int.FloorToInt(blockMousePos.transform.localPosition);
+                }
                 if (tilemap.GetTile((Vector3Int)blockPos))
                 {
+                    Debug.Log("Damaging");
                     chunk.DamageBlock(blockPos, 1);
                 }
+                
+                blockMousePos.parent = transform;
             }
-
-            blockMousePos.parent = transform;
         }
 
         if (Input.GetMouseButtonDown(1))
-        {
+        {   
+            Vector2Int blockPos = Vector2Int.FloorToInt(blockMousePos.transform.localPosition);
+
+            Vector3 vector3BlockPos = new Vector3(blockPos.x, blockPos.y, 0);
+
+            Vector2 direction = (vector3BlockPos - player.position).normalized;
+
+            RaycastHit2D hit = Physics2D.Raycast(player.position, direction, reach, layerMask);
+
+            if (hit)
+            {
+                Tilemap tilemap = hit.transform.GetComponent<Tilemap>();
+                Chunk chunk = hit.transform.GetComponent<Chunk>();
+                if (chunk && tilemap)
+                {
+                    blockMousePos.parent = hit.transform;
+                    blockPos = Vector2Int.FloorToInt(blockMousePos.transform.localPosition);
+                }
+                if (tilemap.GetTile((Vector3Int)blockPos))
+                {
+                    Debug.Log("Placing");
+                
+                    Vector2 buildPos = Vector2Int.RoundToInt(hit.point);
+                    buildPos += hit.normal;
+                    
+                    chunk.AddBlockToChunk(grass, buildPos);
+                    chunk.UpdateChunk();
+                }
+                
+                blockMousePos.parent = transform;
+            }
+            
+            /*
             Vector2 direction = (blockMousePos.position - player.position).normalized;
             RaycastHit2D hit = Physics2D.Raycast(player.position, direction, reach, layerMask);
             if (hit)
@@ -56,7 +88,7 @@ public class BlockManager : MonoBehaviour
                 
                 buildingChunk.AddBlockToChunk(grass, buildPos);
                 buildingChunk.UpdateChunk();
-            }
+            }*/
         }
     }
 }
