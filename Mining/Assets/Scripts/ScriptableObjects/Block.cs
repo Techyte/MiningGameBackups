@@ -6,9 +6,10 @@ public class Block : ScriptableObject
 {
     public Sprite selectedTexture;
     public new string name;
-    public float durability;
-    public Sprite texture;
-    public TileBase tile;
+    public int damage;
+    
+    public TileBase[] Tiles;
+    
     public GameObject[] drops;
     public Sprite hoverTexture;
 }

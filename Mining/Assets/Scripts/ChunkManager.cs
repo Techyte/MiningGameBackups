@@ -157,21 +157,21 @@ public class ChunkManager : MonoBehaviour
             for (int y = 0; y < height; y++)
             { 
                 if (y < totalStoneSpawnDistance)
-                { 
-                    chunkData.AddBlock(new Vector2(x, y), new BlockRepresentation(stoneBlock, new Vector2(x, y), 5));
+                {
+                    chunkData.AddBlock(new Vector2(x, y), new BlockRepresentation(stoneBlock, new Vector2(x, y), stoneBlock.damage));
                 }else
                 {
-                    chunkData.AddBlock(new Vector2(x, y), new BlockRepresentation(dirtBlock, new Vector2(x, y), 5));
+                    chunkData.AddBlock(new Vector2(x, y), new BlockRepresentation(dirtBlock, new Vector2(x, y), dirtBlock.damage));
                 }
             }
             
             if (totalStoneSpawnDistance == height)
             {
-                chunkData.AddBlock(new Vector2(x, height), new BlockRepresentation(stoneBlock, new Vector2(x, height), 5));
+                chunkData.AddBlock(new Vector2(x, height), new BlockRepresentation(stoneBlock, new Vector2(x, height), stoneBlock.damage));
             }
             else
             {
-                chunkData.AddBlock(new Vector2(x, height), new BlockRepresentation(grassBlock, new Vector2(x, height), 5));
+                chunkData.AddBlock(new Vector2(x, height), new BlockRepresentation(grassBlock, new Vector2(x, height), grassBlock.damage));
             }
         }
         
@@ -186,7 +186,8 @@ public class ChunkManager : MonoBehaviour
         newChunk.AddComponent<Chunk>();
         newChunk.AddComponent<TilemapRenderer>();
 
-        newChunk.GetComponent<Chunk>().Blocks = sourceData.Blocks;
+        newChunk.GetComponent<Chunk>().LoadAdditions(sourceData.additions);
+        newChunk.GetComponent<Chunk>().LoadDeletions(sourceData.deletions);
 
         Vector3 newPos = new Vector3(x * 16, 0, 0);
         newChunk.transform.position = newPos;
