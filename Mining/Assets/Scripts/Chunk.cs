@@ -56,7 +56,7 @@ public class Chunk : MonoBehaviour
         }
     }
     
-    public void LoadDeletions(Vector2[] deletions)
+    public void LoadDeletions(List<Vector2> deletions)
     {
         foreach (var deletion in deletions)
         {
@@ -97,12 +97,12 @@ public class BlockRepresentation
 public class ChunkData : ISerializationCallbackReceiver
 {
     public Dictionary<Vector2, BlockRepresentation> additions;
-    public Vector2[] deletions;
+    public List<Vector2> deletions;
 
     public ChunkData()
     {
         additions = new Dictionary<Vector2, BlockRepresentation>();
-        deletions = new Vector2[0];
+        deletions = new List<Vector2>();
     }
 
     public void AddBlock(Vector2 cords, BlockRepresentation blockRepresentation)
