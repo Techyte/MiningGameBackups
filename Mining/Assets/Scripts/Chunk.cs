@@ -7,6 +7,7 @@ using UnityEngine.Tilemaps;
 public class Chunk : MonoBehaviour
 {
     public Dictionary<Vector2, BlockRepresentation> Blocks = new Dictionary<Vector2, BlockRepresentation>();
+    public ChunkData source;
     private Tilemap chunkMap;
     private TilemapCollider2D _collider2D;
     private Transform player;
@@ -32,6 +33,10 @@ public class Chunk : MonoBehaviour
 
     public void AddBlockToChunk(Block block, Vector2 cords)
     {
+        if (source.deletions.Contains(cords))
+        {
+            source.deletions.Remove(cords);
+        }
         Blocks.Add(cords, new BlockRepresentation(block, cords, block.damage));
     }
 
@@ -42,6 +47,11 @@ public class Chunk : MonoBehaviour
             block.damage+=damage;
             if(block.damage >= block.block.Tiles.Length)
             {
+                if (source.additions.ContainsKey(destroyCords))
+                {
+                    source.additions.Remove(destroyCords);
+                }
+                source.deletions.Add(destroyCords);
                 Blocks.Remove(destroyCords);
             }
             UpdateChunk();
@@ -96,6 +106,9 @@ public class BlockRepresentation
 [Serializable]
 public class ChunkData : ISerializationCallbackReceiver
 {
+    [NonSerialized]
+    public Dictionary<Vector2, BlockRepresentation> Blocks;
+    
     public Dictionary<Vector2, BlockRepresentation> additions;
     public List<Vector2> deletions;
 
@@ -103,11 +116,12 @@ public class ChunkData : ISerializationCallbackReceiver
     {
         additions = new Dictionary<Vector2, BlockRepresentation>();
         deletions = new List<Vector2>();
+        Blocks = new Dictionary<Vector2, BlockRepresentation>();
     }
 
     public void AddBlock(Vector2 cords, BlockRepresentation blockRepresentation)
     {
-        additions.Add(cords, blockRepresentation);
+        Blocks.Add(cords, blockRepresentation);
     }
 
     public List<Vector2> _keys = new List<Vector2>();

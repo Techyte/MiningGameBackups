@@ -122,11 +122,11 @@ public class ChunkManager : MonoBehaviour
             Destroy(currentylyLoadedChunks[i]);
         }
         
-        for (int i = currentPlayerChunk - (renderDistance/2); i < currentPlayerChunk + (renderDistance/2); i++)
+        for (int i = currentPlayerChunk - renderDistance/2; i < currentPlayerChunk + renderDistance/2; i++)
         {
             if (currentWorldData.chunks.TryGetValue(i, out ChunkData chunkData))
             {
-                currentChunkData = chunkData;
+                currentChunkData = GenerateNewChunk(i);
             }
             else
             {
@@ -181,17 +181,20 @@ public class ChunkManager : MonoBehaviour
     private GameObject CreateChunkFromData(ChunkData sourceData, int x)
     {
         GameObject newChunk = new GameObject("Chunk");
-        newChunk.transform.parent = chunkHolder;
-
         newChunk.AddComponent<Chunk>();
         newChunk.AddComponent<TilemapRenderer>();
+        
+        Chunk chunk = newChunk.GetComponent<Chunk>();
+        newChunk.transform.parent = chunkHolder;
 
-        newChunk.GetComponent<Chunk>().LoadAdditions(sourceData.additions);
-        newChunk.GetComponent<Chunk>().LoadDeletions(sourceData.deletions);
+        chunk.source = sourceData;
+        chunk.LoadAdditions(sourceData.additions);
+        chunk.LoadDeletions(sourceData.deletions);
+        chunk.Blocks = sourceData.Blocks;
 
         Vector3 newPos = new Vector3(x * 16, 0, 0);
         newChunk.transform.position = newPos;
-        newChunk.GetComponent<Chunk>().UpdateChunk();
+        chunk.UpdateChunk();
         return newChunk;
     }
 }
