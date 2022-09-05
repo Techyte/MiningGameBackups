@@ -72,8 +72,6 @@ public class ChunkManager : MonoBehaviour
         
         if (currentPlayerChunk != lastFrameChunk)
         {
-            Debug.Log("Player moved between chunks");
-            //UpdateData(Application.persistentDataPath + "/world.json");
             UpdateChunks();
         }
         
@@ -105,11 +103,7 @@ public class ChunkManager : MonoBehaviour
     }
 
     private void UpdateChunks()
-    {   
-        Stopwatch watch = new Stopwatch();
-        watch.Start();
-        //currentWorldData = SaveAndLoad<WorldData>.LoadJson(Application.persistentDataPath + "/world.json");
-        
+    {
         if (currentWorldData.seed == 0)
         {
             currentWorldData.seed = Random.Range(-100000, 100000);
@@ -124,8 +118,10 @@ public class ChunkManager : MonoBehaviour
         
         for (int i = currentPlayerChunk - renderDistance/2; i < currentPlayerChunk + renderDistance/2; i++)
         {
+            ChunkData data = new ChunkData();
             if (currentWorldData.chunks.TryGetValue(i, out ChunkData chunkData))
             {
+                data = new ChunkData(chunkData);
                 currentChunkData = GenerateNewChunk(i);
             }
             else
@@ -135,13 +131,10 @@ public class ChunkManager : MonoBehaviour
                 currentWorldData.chunks.Add(i, currentChunkData);
             }
 
-            GameObject chunk = CreateChunkFromData(currentChunkData, i);
+            GameObject chunk = CreateChunkFromData(currentChunkData, data, i);
             chunk.layer = 17;
             currentylyLoadedChunks.Add(chunk);
         }
-
-        watch.Stop();
-        Debug.Log(watch.ElapsedMilliseconds + "ms");
     }
 
     private ChunkData GenerateNewChunk(int chunkId)
@@ -178,9 +171,9 @@ public class ChunkManager : MonoBehaviour
         return chunkData;
     }
 
-    private GameObject CreateChunkFromData(ChunkData sourceData, int x)
+    private GameObject CreateChunkFromData(ChunkData sourceData, ChunkData differencesData, int x)
     {
-        GameObject newChunk = new GameObject("Chunk");
+        GameObject newChunk = new GameObject($"Chunk {x.ToString()}");
         newChunk.AddComponent<Chunk>();
         newChunk.AddComponent<TilemapRenderer>();
         
@@ -188,9 +181,9 @@ public class ChunkManager : MonoBehaviour
         newChunk.transform.parent = chunkHolder;
 
         chunk.source = sourceData;
-        chunk.LoadAdditions(sourceData.additions);
-        chunk.LoadDeletions(sourceData.deletions);
         chunk.Blocks = sourceData.Blocks;
+        chunk.LoadAdditions(differencesData.additions);
+        chunk.LoadDeletions(differencesData.deletions);
 
         Vector3 newPos = new Vector3(x * 16, 0, 0);
         newChunk.transform.position = newPos;

@@ -35,7 +35,6 @@ public class BlockManager : MonoBehaviour
                 }
                 if (tilemap.GetTile((Vector3Int)blockPos))
                 {
-                    Debug.Log("Damaging");
                     chunk.DamageBlock(blockPos, 1);
                 }
                 

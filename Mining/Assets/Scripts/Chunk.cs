@@ -106,17 +106,23 @@ public class BlockRepresentation
 [Serializable]
 public class ChunkData : ISerializationCallbackReceiver
 {
-    [NonSerialized]
-    public Dictionary<Vector2, BlockRepresentation> Blocks;
-    
     public Dictionary<Vector2, BlockRepresentation> additions;
     public List<Vector2> deletions;
+    
+    [NonSerialized]
+    public Dictionary<Vector2, BlockRepresentation> Blocks;
 
     public ChunkData()
     {
         additions = new Dictionary<Vector2, BlockRepresentation>();
         deletions = new List<Vector2>();
         Blocks = new Dictionary<Vector2, BlockRepresentation>();
+    }
+
+    public ChunkData(ChunkData data)
+    {
+        additions = data.additions;
+        deletions = data.deletions;
     }
 
     public void AddBlock(Vector2 cords, BlockRepresentation blockRepresentation)
