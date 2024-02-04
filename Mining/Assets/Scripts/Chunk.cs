@@ -1,56 +1,32 @@
-using System;
+using Data_Structures;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class Chunk : MonoBehaviour
 {
-    [SerializeField] private Tilemap _tilemap;
-    [SerializeField] private Tile dirt;
-    [SerializeField] private Tile grass;
-    [SerializeField] private Tile stone;
+    private Tilemap _tilemap;
 
-    [SerializeField] private int id = 0;
+    private int id => GetData().id;
 
-    private void Start()
+    private ChunkData _data;
+
+    public ChunkData GetData()
     {
-        Vector3 pos = transform.position;
-        pos.x = id * GameManager.Instance.ChunkWidth;
-        transform.position = pos;
-        
+        return _data;
+    }
+    
+    public void Init(ChunkData data)
+    {
+        _data = data;
+        _tilemap = GetComponent<Tilemap>();
         GenerateTerrain();
     }
 
-    private void Update()
+    public void GenerateTerrain()
     {
-        GenerateTerrain();
-    }
-
-    private void GenerateTerrain()
-    {
-        _tilemap.ClearAllTiles();
-        for (int x = 0; x < GameManager.Instance.ChunkWidth; x++)
+        foreach (var block in _data.blocks.Values)
         {
-            int newX = x + (id * GameManager.Instance.ChunkWidth);
-
-            float height = Mathf.PerlinNoise(newX/GameManager.Instance.DetailModifier + 0.1f, newX/GameManager.Instance.DetailModifier + 0.1f) * GameManager.Instance.HeightExageration;
-
-            height *= GameManager.Instance.HeightModifier;
-
-            height = Mathf.RoundToInt(height);
-            
-            _tilemap.SetTile(new Vector3Int(x, (int)height, 0), grass);
-
-            for (int y = (int)height-1; y > GameManager.Instance.ChunkHeight; y--)
-            {
-                if (y == GameManager.Instance.ChunkHeight+1)
-                {
-                    _tilemap.SetTile(new Vector3Int(x, y, 0), stone);
-                }
-                else
-                {
-                    _tilemap.SetTile(new Vector3Int(x, y, 0), dirt);   
-                }
-            }
+            _tilemap.SetTile((Vector3Int)block.LocalPosition, block.Block.tile);
         }
     }
 }
