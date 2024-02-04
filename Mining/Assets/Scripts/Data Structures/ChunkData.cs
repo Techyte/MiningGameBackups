@@ -15,16 +15,16 @@ namespace Data_Structures
         public int id;
         public int seed;
 
-        public void AddBlock(Block block, Vector2Int position)
+        public void AddBlock(Block block, Vector2Int localPosition)
         {
             int offset = id * WorldManager.Instance.ChunkWidth;
 
-            Vector2Int localPos = position;
-            localPos.x += offset;
+            Vector2Int worldPosition = localPosition;
+            worldPosition.x += offset;
             
-            BlockInstance instance = new BlockInstance(block, position, localPos);
+            BlockInstance instance = new BlockInstance(block, worldPosition, localPosition);
             
-            blocks.Add(localPos, instance);
+            blocks.Add(localPosition, instance);
         }
     }
 }

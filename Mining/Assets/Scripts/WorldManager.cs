@@ -37,17 +37,9 @@ public class WorldManager : MonoBehaviour
     public int PlayerChunkId => playerChunkId;
     public int ViewDistance => viewDistance;
 
-    public int testX = 0;
+    private int _lasPlayerChunkId;
 
-    public void Test()
-    {
-        float height = Mathf.PerlinNoise(testX/DetailModifier + 0.1f * world.seed, world.seed * world.seed + 0.1f) * HeightExageration;
-    
-        height *= HeightModifier;
-    
-        height = Mathf.RoundToInt(height);
-        Debug.Log(height);
-    }
+    [SerializeField] private Transform player;
 
     private void Awake()
     {
@@ -79,13 +71,57 @@ public class WorldManager : MonoBehaviour
         {
             SceneManager.LoadScene("Game");
         }
+
+        float playerX = player.position.x;
+        playerX /= ChunkWidth;
+        playerX = Mathf.FloorToInt(playerX);
+        
+        playerChunkId = (int)playerX;
+        
+        UpdateChunks();
+    }
+
+    private void UpdateChunks()
+    {
+        if (_lasPlayerChunkId != playerChunkId)
+        {
+            foreach (var chunk in chunks.Values)
+            {
+                Destroy(chunk);
+            }
+            
+            chunks.Clear();
+
+            int leftChunk = playerChunkId - 1;
+            int rightChunk = playerChunkId - 1;
+
+            if (world.chunks.TryGetValue(leftChunk, out ChunkData chunk0))
+            {
+                LoadChunk(chunk0);
+            }
+            if (world.chunks.TryGetValue(playerChunkId, out ChunkData chunk1))
+            {
+                LoadChunk(chunk1);
+            }
+            if (world.chunks.TryGetValue(rightChunk, out ChunkData chunk2))
+            {
+                LoadChunk(chunk2);
+            }
+        }
+        
+        _lasPlayerChunkId = playerChunkId;
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveAndLoad<World>.SaveJson(world, Application.persistentDataPath + "/world.json");
     }
 
     private void GenerateNewWorld()
     {
         World newWorld = new World();
         
-        int seed = Random.Range(-999999999, 999999999);
+        int seed = Random.Range(-9999999, 9999999);
 
         Dictionary<int, ChunkData> initialChunks = new Dictionary<int, ChunkData>();
 
@@ -161,10 +197,16 @@ public class WorldManager : MonoBehaviour
         Chunk chunk = new GameObject($"Chunk ({data.id})").AddComponent<Chunk>();
         chunk.transform.parent = transform;
 
+        Vector3 pos = chunk.transform.position;
+        pos.x = data.id * chunkWidth;
+        chunk.transform.position = pos;
+
         chunk.gameObject.AddComponent<Tilemap>();
         chunk.gameObject.AddComponent<TilemapRenderer>();
         chunk.gameObject.AddComponent<TilemapCollider2D>();
         
         chunk.Init(data);
+        
+        chunks.Add(data.id, chunk);
     }
 }
